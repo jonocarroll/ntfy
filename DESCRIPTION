@@ -17,3 +17,5 @@ RoxygenNote: 7.2.1
 Imports: 
     httr,
     jsonlite
+URL: https://github.com/jonocarroll/ntfy
+BugReports: https://github.com/jonocarroll/ntfy/issues
