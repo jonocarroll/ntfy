@@ -1,0 +1,207 @@
+---
+output: github_document
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-"
+)
+library(ntfy)
+```
+
+# ntfy <img src="man/figures/logo.png" align="right" height="102" />
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+**ntfy** (pronounce: *notify*) is a simple HTTP-based pub-sub notification service. 
+It allows you to send notifications to your phone or desktop via scripts from 
+any computer, entirely without signup, cost or setup. It's also [open source][ntfy_gh] if 
+you want to run your own. Visit [ntfy.sh][ntfy] for more details.
+
+{ntfy} is a lightweight R wrapper for this service. The magic sauce is just 
+`POST` and `GET` calls equivalent to 
+
+```
+curl -d "Process Complete 😀" ntfy.sh/yourSecretTopic 
+```
+  
+but made to work nicely in an R workflow.
+
+## Installation
+
+You can install the development version of ntfy like so:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("jonocarroll/ntfy")
+```
+
+## Functionality
+
+Follow the instructions at [ntfy.sh][ntfy] to install any of the 
+mobile apps or use the web app. No sign-up or account is necessary.
+
+Choose a topic (note: this isn't a password-protected service, so choose something 
+obscure) and subscribe to it on your device.
+
+Add the topic as an environment variable, e.g.
+
+```r
+usethis::edit_r_environ()
+
+[...]
+
+NTFY_TOPIC='yourSecretTopic'
+#NTFY_SERVER='https://ntfy.sh'
+```
+
+The server will automatically be set to https://ntfy.sh unless you specify another.
+
+This can be confirmed with 
+
+```{r server}
+ntfy_server()
+```
+
+With the package loaded, you can now send notifications which should appear on 
+your device
+
+```{r ntfy, eval = FALSE}
+library(ntfy)
+ntfy_send("test from R!")
+```
+
+```
+Response [http://ntfy.sh/yourSecretTopic]
+  Date: 2022-11-09 06:57
+  Status: 200
+  Content-Type: application/json
+  Size: 103 B
+{"id":"SLnGohKykeR8","time":1667977077,"event":"message","topic":"yourSecretTopic","message":"'...
+```
+
+This can be used in many ways. One would be to notify the completion of a process. 
+The `ntfy_done()` function sends a notification with the (default) body
+
+```
+Process completed at <Sys.time()>
+```
+
+```{r done}
+slow_process <- function(x) {
+  Sys.sleep(8) # sleep for 8 seconds
+  x
+}
+
+mtcars |> 
+  head() |> 
+  slow_process() |> 
+  ntfy_done()
+```
+
+which results in a notification on subscribed devices
+
+```
+Process completed at 2022-11-09 17:31:03
+```
+
+When using the base R pipe `|>` the piped commands are composed together by the 
+parser, so 
+
+```
+f() |> 
+  g() |> 
+    h()
+```
+
+becomes
+
+```
+h(g(f()))
+```
+
+We can use this fact to time the running of a process if the last function 
+(above, `h()`) is `system.time()`. The `ntfy_done_with_timing()` function does exactly 
+this
+
+```{r done_with_timing}
+mtcars |> 
+  head() |> 
+  slow_process() |> 
+  ntfy_done_with_timing()
+```
+
+which sends the notification
+
+```
+Process completed in 8.003s
+```
+
+Note: the {magrittr} pipe `%>%` works differently and does not compose the same way, so this will 
+result in a very short time report. Wrapping an entire pipeline with `ntfy_done_with_timing()` will work, 
+though
+
+```{r magrittr}
+library(magrittr)
+ntfy_done_with_timing(
+  mtcars %>%
+    head() %>% 
+    slow_process()
+)
+```
+
+sends
+
+```
+Process completed in 8.004s
+```
+
+The history of the notifications sent can be retrieved as well, with control over how far back to search
+
+```{r history, eval = FALSE}
+ntfy_history(since = "1h")
+```
+```{r, echo = FALSE}
+structure(list(id = c("0oDpk4oisfNO", "4Fcy9kIL0m6Z", "AGXn4q0CirFT"
+), time = c(1667988383L, 1667988413L, 1667990983L), event = c("message", 
+"message", "message"), topic = c("yourSecretTopic", "yourSecretTopic", "yourSecretTopic"
+), message = c("test from R!", "Process completed at 2022-11-09 17:31:03", "Process completed in 8.003s")),
+row.names = c(NA, -3L
+), class = "data.frame")
+```
+
+## Similar Services
+
+* [{Rpushbullet}][rpushbullet] offers similar functionality, but requires sign-up / an API key
+* [{beepr}][beepr] can play a sound when a process completes
+* [IFTTT][ifttt] has an API and can be configured to send messages with e.g. [nifffty][nifffty]
+* [This blog post][rviews] details many ways to send notifications, via email, text, Slack, and MS Teams
+
+## Privacy
+
+Q: *"Will you know what topics exist, can you spy on me?"*
+
+A: Refer to the [FAQ][privacy]
+
+## Contributing
+
+If this service is useful to you, consider donating to [the developer][ntfy_dev_sp] via GitHub sponsors.
+If this package is useful to you, [I also accept donations][jonocarroll_sp] via GitHub sponsors.
+
+[ntfy]:https://ntfy.sh
+[ntfy_gh]:https://github.com/binwiederhier/ntfy
+[rpushbullet]:https://cran.r-project.org/web/packages/RPushbullet/index.html
+[beepr]:https://cran.r-project.org/web/packages/beepr/index.html
+[ifttt]:https://ifttt.com/docs/connect_api
+[rviews]:https://rviews.rstudio.com/2020/06/18/how-to-have-r-notify-you/
+[nifffty]:https://github.com/hrbrmstr/nifffty
+[privacy]:https://ntfy.sh/docs/faq/#will-you-know-what-topics-exist-can-you-spy-on-me
+[ntfy_dev_sp]:https://github.com/sponsors/binwiederhier
+[jonocarroll_sp]:https://github.com/sponsors/jonocarroll
