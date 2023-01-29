@@ -4,7 +4,13 @@
 \alias{ntfy_send}
 \title{Send a Notification}
 \usage{
-ntfy_send(body = "test", topic = ntfy_topic(), server = ntfy_server(), ...)
+ntfy_send(
+  body = "test",
+  topic = ntfy_topic(),
+  server = ntfy_server(),
+  capture = shQuote,
+  ...
+)
 }
 \arguments{
 \item{body}{text to send as notification}
@@ -12,6 +18,8 @@ ntfy_send(body = "test", topic = ntfy_topic(), server = ntfy_server(), ...)
 \item{topic}{subscribed topic to which to send notification}
 
 \item{server}{ntfy server}
+
+\item{capture}{function to use to capture the output, e.g. \code{shQuote}, \code{capture.output}}
 
 \item{...}{other options passed to \code{\link[httr:POST]{httr::POST()}}}
 }

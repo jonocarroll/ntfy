@@ -23,6 +23,7 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 #' @param body text to send as notification
 #' @param topic subscribed topic to which to send notification
 #' @param server ntfy server
+#' @param capture function to use to capture the output, e.g. `shQuote`, `capture.output`
 #' @param ... other options passed to [httr::POST()]
 #'
 #' @return the returned value from [httr::POST()]
@@ -30,9 +31,10 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 ntfy_send <- function(body = "test",
                       topic = ntfy_topic(),
                       server = ntfy_server(),
+                      capture = shQuote,
                       ...) {
   httr::POST(url = paste(server, topic, sep = "/"),
-             body = shQuote(body),
+             body = capture(body),
              ...
   )
 }
