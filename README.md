@@ -176,6 +176,15 @@ ntfy_history(since = "1h")
     #> 2 Process completed at 2022-11-09 17:31:03
     #> 3              Process completed in 8.003s
 
+## API
+
+The full ntfy.sh API should be supported, including sending a title and
+[tags](https://docs.ntfy.sh/publish/#tags-emojis)
+
+<img src="man/figures/notification1.png" width="300" />
+
+<img src="man/figures/notification2.png" width="300" />
+
 ## Similar Services
 
 - [{Rpushbullet}](https://cran.r-project.org/web/packages/RPushbullet/index.html)

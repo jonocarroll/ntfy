@@ -177,6 +177,14 @@ row.names = c(NA, -3L
 ), class = "data.frame")
 ```
 
+## API
+
+The full ntfy.sh API should be supported, including sending a title and [tags](https://docs.ntfy.sh/publish/#tags-emojis)
+
+![](man/figures/notification1.png){width=300}
+
+![](man/figures/notification2.png){width=300}
+
 ## Similar Services
 
 * [{Rpushbullet}][rpushbullet] offers similar functionality, but requires sign-up / an API key
