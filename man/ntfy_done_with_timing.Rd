@@ -7,7 +7,9 @@
 ntfy_done_with_timing(
   x,
   topic = ntfy_topic(),
-  body = paste0("Process completed in ", time_result, "s"),
+  message = paste0("Process completed in ", time_result, "s"),
+  title = "ntfy_done_with_timing()",
+  tags = "stopwatch",
   server = ntfy_server(),
   ...
 )
@@ -17,7 +19,12 @@ ntfy_done_with_timing(
 
 \item{topic}{subscribed topic to which to send notification}
 
-\item{body}{text to send as notification}
+\item{message}{text to send as notification}
+
+\item{title}{title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}}
+
+\item{tags}{text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
+provided as a list}
 
 \item{server}{ntfy server}
 
