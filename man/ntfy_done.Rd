@@ -7,7 +7,9 @@
 ntfy_done(
   x,
   topic = ntfy_topic(),
-  body = paste0("Process completed at ", Sys.time()),
+  message = paste0("Process completed at ", Sys.time()),
+  title = "ntfy_done()",
+  tags = "white_check_mark",
   server = ntfy_server(),
   ...
 )
@@ -17,7 +19,12 @@ ntfy_done(
 
 \item{topic}{subscribed topic to which to send notification}
 
-\item{body}{text to send as notification}
+\item{message}{text to send as notification}
+
+\item{title}{title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}}
+
+\item{tags}{text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
+provided as a list}
 
 \item{server}{ntfy server}
 

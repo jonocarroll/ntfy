@@ -4,10 +4,43 @@
 \alias{ntfy_send}
 \title{Send a Notification}
 \usage{
-ntfy_send(body = "test", topic = ntfy_topic(), server = ntfy_server(), ...)
+ntfy_send(
+  message = "test",
+  title = NULL,
+  tags = NULL,
+  priority = 3,
+  actions = NULL,
+  click = NULL,
+  attach = NULL,
+  filename = NULL,
+  delay = NULL,
+  email = NULL,
+  topic = ntfy_topic(),
+  server = ntfy_server(),
+  ...
+)
 }
 \arguments{
-\item{body}{text to send as notification}
+\item{message}{text to send as notification}
+
+\item{title}{title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}}
+
+\item{tags}{text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
+provided as a list}
+
+\item{priority}{Message priority with 1=min, 3=default and 5=max. See \url{https://docs.ntfy.sh/publish/#message-priority}}
+
+\item{actions}{Custom user action buttons for notifications. See \url{https://docs.ntfy.sh/publish/#action-buttons}}
+
+\item{click}{Website opened when notification is clicked. See \url{https://docs.ntfy.sh/publish/#click-action}}
+
+\item{attach}{URL of an attachment, see attach via URL. See \url{https://docs.ntfy.sh/publish/#attach-file-from-url}}
+
+\item{filename}{File name of the attachment}
+
+\item{delay}{Timestamp or duration for delayed delivery}
+
+\item{email}{E-mail address for e-mail notifications??}
 
 \item{topic}{subscribed topic to which to send notification}
 
@@ -16,7 +49,7 @@ ntfy_send(body = "test", topic = ntfy_topic(), server = ntfy_server(), ...)
 \item{...}{other options passed to \code{\link[httr:POST]{httr::POST()}}}
 }
 \value{
-the returned value from \code{\link[httr:POST]{httr::POST()}}
+a \code{\link[httr:response]{httr::response()}} object (from \code{\link[httr:POST]{httr::POST()}})
 }
 \description{
 Send a Notification

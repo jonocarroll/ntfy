@@ -20,19 +20,55 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 
 #' Send a Notification
 #'
-#' @param body text to send as notification
+#' @param message text to send as notification
+#' @param title title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}
+#' @param tags text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
+#'     provided as a list
+#' @param priority Message priority with 1=min, 3=default and 5=max. See \url{https://docs.ntfy.sh/publish/#message-priority}
+#' @param actions Custom user action buttons for notifications. See \url{https://docs.ntfy.sh/publish/#action-buttons}
+#' @param click Website opened when notification is clicked. See \url{https://docs.ntfy.sh/publish/#click-action}
+#' @param attach URL of an attachment, see attach via URL. See \url{https://docs.ntfy.sh/publish/#attach-file-from-url}
+#' @param filename File name of the attachment
+#' @param delay Timestamp or duration for delayed delivery
+#' @param email E-mail address for e-mail notifications??
 #' @param topic subscribed topic to which to send notification
 #' @param server ntfy server
 #' @param ... other options passed to [httr::POST()]
 #'
-#' @return the returned value from [httr::POST()]
+#' @return a [httr::response()] object (from [httr::POST()])
 #' @export
-ntfy_send <- function(body = "test",
+ntfy_send <- function(message = "test",
+                      title = NULL,
+                      tags = NULL, #
+                      priority = 3,
+                      actions = NULL,
+                      click = NULL,
+                      attach = NULL,
+                      filename = NULL,
+                      delay = NULL,
+                      email = NULL,
                       topic = ntfy_topic(),
                       server = ntfy_server(),
                       ...) {
-  httr::POST(url = paste(server, topic, sep = "/"),
-             body = shQuote(body),
+
+  payload <- list(topic = topic, message = message, priority = priority)
+  if (!is.null(title)) payload <- append(payload, list(title = title))
+  if (!is.null(tags)) {
+    if (!is.list(tags)) tags <- list(tags)
+    payload <- append(payload, list(tags = tags))
+  }
+  if (!is.null(actions)) payload <- append(payload, list(actions = actions))
+  if (!is.null(click)) payload <- append(payload, list(click = click))
+  if (!is.null(attach)) payload <- append(payload, list(attach = attach))
+  if (!is.null(filename)) payload <- append(payload, list(filename = filename))
+  if (!is.null(delay)) payload <- append(payload, list(delay = delay))
+  if (!is.null(email)) payload <- append(payload, list(email = email))
+
+  payload <- jsonlite::toJSON(payload, auto_unbox = TRUE)
+
+  httr::POST(url = server,
+             body = payload,
+             encode = "form",
              ...
   )
 }
@@ -88,11 +124,13 @@ unjson <- function(x) {
 #' @return the input x (for further piping) plus a notification will be sent
 #' @export
 ntfy_done <- function(x,
-                 topic = ntfy_topic(),
-                 body = paste0("Process completed at ", Sys.time()),
-                 server = ntfy_server(),
-                 ...) {
-  ntfy_send(topic = topic, body = body, server = server, ...)
+                      topic = ntfy_topic(),
+                      message = paste0("Process completed at ", Sys.time()),
+                      title = "ntfy_done()",
+                      tags = "white_check_mark",
+                      server = ntfy_server(),
+                      ...) {
+  ntfy_send(topic = topic, message = message, server = server, title = title, tags = tags, ...)
   x
 }
 
@@ -106,10 +144,12 @@ ntfy_done <- function(x,
 #' @export
 ntfy_done_with_timing <- function(x,
                                   topic = ntfy_topic(),
-                                  body = paste0("Process completed in ", time_result, "s"),
+                                  message = paste0("Process completed in ", time_result, "s"),
+                                  title = "ntfy_done_with_timing()",
+                                  tags = "stopwatch",
                                   server = ntfy_server(),
                              ...) {
   time_result <- system.time(res <- force(x))[3]
-  ntfy_done(res, topic = topic, body = body, server = server, ...)
+  ntfy_done(res, topic = topic, message = message, server = server, title = title, tags = tags,  ...)
 }
 
