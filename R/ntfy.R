@@ -40,7 +40,7 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 ntfy_send <- function(message  = "test",
                       title    = NULL,
                       tags     = NULL, 
-                      priority = NULL,
+                      priority = 3,
                       actions  = NULL,
                       click    = NULL,
                       attach   = NULL,
@@ -51,24 +51,21 @@ ntfy_send <- function(message  = "test",
                       server   = ntfy_server(),
                       ...) {
 
-  payload <- modifyList(
-    list(
-      priority = 3
-    ),
-    list(
-      topic    = topic,
-      message  = message,
-      priority = priority,
-      title    = title,
-      tags     = as.list(tags),
-      actions  = actions,
-      click    = click,
-      attach   = attach,
-      filename = filename,
-      delay    = delay,
-      email    = email
-    )
+  payload <- list(
+    topic    = topic,
+    message  = message,
+    priority = priority,
+    title    = title,
+    tags     = as.list(tags),
+    actions  = actions,
+    click    = click,
+    attach   = attach,
+    filename = filename,
+    delay    = delay,
+    email    = email
   )
+  
+  payload <- Filter(Negate(is.null), payload)
 
   httr::POST(url = server,
              body = payload,
