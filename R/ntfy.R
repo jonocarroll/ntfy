@@ -37,38 +37,39 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 #'
 #' @return a [httr::response()] object (from [httr::POST()])
 #' @export
-ntfy_send <- function(message = "test",
-                      title = NULL,
-                      tags = NULL, #
+ntfy_send <- function(message  = "test",
+                      title    = NULL,
+                      tags     = NULL, 
                       priority = 3,
-                      actions = NULL,
-                      click = NULL,
-                      attach = NULL,
+                      actions  = NULL,
+                      click    = NULL,
+                      attach   = NULL,
                       filename = NULL,
-                      delay = NULL,
-                      email = NULL,
-                      topic = ntfy_topic(),
-                      server = ntfy_server(),
+                      delay    = NULL,
+                      email    = NULL,
+                      topic    = ntfy_topic(),
+                      server   = ntfy_server(),
                       ...) {
 
-  payload <- list(topic = topic, message = message, priority = priority)
-  if (!is.null(title)) payload <- append(payload, list(title = title))
-  if (!is.null(tags)) {
-    if (!is.list(tags)) tags <- list(tags)
-    payload <- append(payload, list(tags = tags))
-  }
-  if (!is.null(actions)) payload <- append(payload, list(actions = actions))
-  if (!is.null(click)) payload <- append(payload, list(click = click))
-  if (!is.null(attach)) payload <- append(payload, list(attach = attach))
-  if (!is.null(filename)) payload <- append(payload, list(filename = filename))
-  if (!is.null(delay)) payload <- append(payload, list(delay = delay))
-  if (!is.null(email)) payload <- append(payload, list(email = email))
-
-  payload <- jsonlite::toJSON(payload, auto_unbox = TRUE)
+  payload <- list(
+    topic    = topic,
+    message  = message,
+    priority = priority,
+    title    = title,
+    tags     = as.list(tags),
+    actions  = actions,
+    click    = click,
+    attach   = attach,
+    filename = filename,
+    delay    = delay,
+    email    = email
+  )
+  
+  payload <- Filter(Negate(is.null), payload)
 
   httr::POST(url = server,
              body = payload,
-             encode = "form",
+             encode = "json",
              ...
   )
 }
