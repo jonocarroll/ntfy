@@ -1,6 +1,6 @@
 Package: ntfy
 Title: Lightweight Wrapper to the ntfy.sh Service
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: person("Jonathan", "Carroll", 
  email = "rpkg@jcarroll.com.au", 
  role = c("aut", "cre"), 
@@ -19,3 +19,6 @@ Imports:
     jsonlite
 URL: https://github.com/jonocarroll/ntfy
 BugReports: https://github.com/jonocarroll/ntfy/issues
+Depends: 
+    R (>= 2.10)
+LazyData: true

@@ -64,14 +64,13 @@ appear on your device
 ``` r
 library(ntfy)
 ntfy_send("test from R!")
+#> Response [https://ntfy.sh/]
+#>   Date: 2023-07-04 07:37
+#>   Status: 200
+#>   Content-Type: application/json
+#>   Size: 136 B
+#> {"id":"LBSejrjeGeIV","time":1688456239,"expires":1688499439,"event":"message"...
 ```
-
-    Response [http://ntfy.sh/yourSecretTopic]
-      Date: 2022-11-09 06:57
-      Status: 200
-      Content-Type: application/json
-      Size: 103 B
-    {"id":"SLnGohKykeR8","time":1667977077,"event":"message","topic":"yourSecretTopic","message":"'...
 
 This can be used in many ways. One would be to notify the completion of
 a process. The `ntfy_done()` function sends a notification with the
@@ -100,7 +99,7 @@ mtcars |>
 
 which results in a notification on subscribed devices
 
-    Process completed at 2022-11-09 17:31:03
+    Process completed at 2023-07-04 17:00
 
 When using the base R pipe `|>` the piped commands are composed together
 by the parser, so
@@ -184,6 +183,91 @@ The full ntfy.sh API should be supported, including sending a title and
 <img src="man/figures/notification1.png" width="300" />
 
 <img src="man/figures/notification2.png" width="300" />
+
+## Emoji
+
+Supported tags (emoji) can be sent with the `tags` argument (one or
+more). These can be searched or shown with `show_emoji()` which will
+look for a given name in the compatible values, or search for it in the
+compatible metadata.
+
+The compatible data is stored as `emoji`
+
+``` r
+data("emoji")
+head(emoji)
+#>   emoji         aliases             tags          category     description
+#> 1    👎              -1 disapprove, bury     People & Body     thumbs down
+#> 2    👍              +1      approve, ok     People & Body       thumbs up
+#> 3    💯             100   score, perfect Smileys & Emotion  hundred points
+#> 4    🔢            1234          numbers           Symbols   input numbers
+#> 5    🥇 1st_place_medal             gold        Activities 1st place medal
+#> 6    🥈 2nd_place_medal           silver        Activities 2nd place medal
+#>   unicode_version
+#> 1             6.0
+#> 2             6.0
+#> 3             6.0
+#> 4             6.0
+#> 5             9.0
+#> 6             9.0
+```
+
+with the tags stored as `tags` for easy auto-complete
+
+``` r
+ntfy_send(message = "sending with tags!", 
+          tags = c(tags$cat, tags$dog)
+)
+#> Response [https://ntfy.sh/]
+#>   Date: 2023-07-04 07:37
+#>   Status: 200
+#>   Content-Type: application/json
+#>   Size: 163 B
+#> {"id":"kwRrK0UJu8v7","time":1688456264,"expires":1688499464,"event":"message"...
+```
+
+The compatible emoji can be shown with
+
+``` r
+show_emoji("rofl")
+#> 
+#>  🤣 rofl 
+#> 
+```
+
+If the name is not found in `aliases` (the compatible names) it will be
+searched in `tags`
+
+``` r
+show_emoji("lol")
+#> Unable to find that name directly.
+#> Did you perhaps want...
+#> 
+#>  🤣 rofl 
+#> 
+
+show_emoji("pet")
+#> Unable to find that name directly.
+#> Did you perhaps want...
+#> 
+#>  🐱 cat 
+#>  🐶 dog 
+#>  🐹 hamster 
+#> 
+```
+
+You can force this behaviour with
+
+``` r
+show_emoji("dog", search = TRUE)
+#> 
+#>  🐶 dog 
+#> 
+#> Did you perhaps want...
+#> 
+#>  🐩 poodle 
+#> 
+```
 
 ## Similar Services
 
