@@ -1,6 +1,6 @@
 Package: ntfy
 Title: Lightweight Wrapper to the ntfy.sh Service
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: person("Jonathan", "Carroll", 
  email = "rpkg@jcarroll.com.au", 
  role = c("aut", "cre"), 
@@ -22,3 +22,5 @@ BugReports: https://github.com/jonocarroll/ntfy/issues
 Depends: 
     R (>= 2.10)
 LazyData: true
+Suggests: 
+    ggplot2

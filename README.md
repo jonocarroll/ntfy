@@ -65,11 +65,11 @@ appear on your device
 library(ntfy)
 ntfy_send("test from R!")
 #> Response [https://ntfy.sh/]
-#>   Date: 2023-07-04 07:37
+#>   Date: 2023-07-11 03:57
 #>   Status: 200
 #>   Content-Type: application/json
 #>   Size: 136 B
-#> {"id":"LBSejrjeGeIV","time":1688456239,"expires":1688499439,"event":"message"...
+#> {"id":"cyyxyTbqnyc7","time":1689047847,"expires":1689091047,"event":"message"...
 ```
 
 This can be used in many ways. One would be to notify the completion of
@@ -184,6 +184,31 @@ The full ntfy.sh API should be supported, including sending a title and
 
 <img src="man/figures/notification2.png" width="300" />
 
+## Images
+
+Images can be sent within notifications by specifying as `image` either
+the filename or a `ggplot2` object (which will be saved to a temporary
+file)
+
+``` r
+library(ggplot2)
+p <- ggplot(mtcars, (aes(mpg, wt))) + 
+  geom_point() + 
+  geom_smooth() + 
+  labs(title = "ggplot images in {ntfy}")
+ntfy_send("ggplot2 images in notifications!", 
+          tags = c("tada", "chart"),
+          image = p)
+#> Saving 7 x 5 in image
+#> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+#> Response [https://ntfy.sh/jonotest]
+#>   Date: 2023-07-11 03:57
+#>   Status: 200
+#>   Content-Type: application/json
+#>   Size: 319 B
+#> {"id":"ML466fCn29AD","time":1689047875,"expires":1689091075,"event":"message"...
+```
+
 ## Emoji
 
 Supported tags (emoji) can be sent with the `tags` argument (one or
@@ -196,20 +221,16 @@ The compatible data is stored as `emoji`
 ``` r
 data("emoji")
 head(emoji)
-#>   emoji         aliases             tags          category     description
-#> 1    👎              -1 disapprove, bury     People & Body     thumbs down
-#> 2    👍              +1      approve, ok     People & Body       thumbs up
-#> 3    💯             100   score, perfect Smileys & Emotion  hundred points
-#> 4    🔢            1234          numbers           Symbols   input numbers
-#> 5    🥇 1st_place_medal             gold        Activities 1st place medal
-#> 6    🥈 2nd_place_medal           silver        Activities 2nd place medal
-#>   unicode_version
-#> 1             6.0
-#> 2             6.0
-#> 3             6.0
-#> 4             6.0
-#> 5             9.0
-#> 6             9.0
+#> # A tibble: 6 × 6
+#>   emoji aliases         tags      category          description     unicode_ve…¹
+#>   <chr> <chr>           <list>    <chr>             <chr>           <chr>       
+#> 1 👎    -1              <chr [2]> People & Body     thumbs down     6.0         
+#> 2 👍    +1              <chr [2]> People & Body     thumbs up       6.0         
+#> 3 💯    100             <chr [2]> Smileys & Emotion hundred points  6.0         
+#> 4 🔢    1234            <chr [1]> Symbols           input numbers   6.0         
+#> 5 🥇    1st_place_medal <chr [1]> Activities        1st place medal 9.0         
+#> 6 🥈    2nd_place_medal <chr [1]> Activities        2nd place medal 9.0         
+#> # … with abbreviated variable name ¹​unicode_version
 ```
 
 with the tags stored as `tags` for easy auto-complete
@@ -219,11 +240,11 @@ ntfy_send(message = "sending with tags!",
           tags = c(tags$cat, tags$dog)
 )
 #> Response [https://ntfy.sh/]
-#>   Date: 2023-07-04 07:37
+#>   Date: 2023-07-11 03:57
 #>   Status: 200
 #>   Content-Type: application/json
 #>   Size: 163 B
-#> {"id":"kwRrK0UJu8v7","time":1688456264,"expires":1688499464,"event":"message"...
+#> {"id":"ifkGMIb0l9aU","time":1689047876,"expires":1689091076,"event":"message"...
 ```
 
 The compatible emoji can be shown with

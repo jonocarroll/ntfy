@@ -27,6 +27,7 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 #' @param priority Message priority with 1=min, 3=default and 5=max. See \url{https://docs.ntfy.sh/publish/#message-priority}
 #' @param actions Custom user action buttons for notifications. See \url{https://docs.ntfy.sh/publish/#action-buttons}
 #' @param click Website opened when notification is clicked. See \url{https://docs.ntfy.sh/publish/#click-action}
+#' @param image Image to include in the body of the notification. Either a `ggplot` object or a filename.
 #' @param attach URL of an attachment, see attach via URL. See \url{https://docs.ntfy.sh/publish/#attach-file-from-url}
 #' @param filename File name of the attachment
 #' @param delay Timestamp or duration for delayed delivery
@@ -39,10 +40,11 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 #' @export
 ntfy_send <- function(message  = "test",
                       title    = NULL,
-                      tags     = NULL, 
+                      tags     = NULL,
                       priority = 3,
                       actions  = NULL,
                       click    = NULL,
+                      image    = NULL,
                       attach   = NULL,
                       filename = NULL,
                       delay    = NULL,
@@ -64,14 +66,35 @@ ntfy_send <- function(message  = "test",
     delay    = delay,
     email    = email
   )
-  
   payload <- Filter(Negate(is.null), payload)
 
-  httr::POST(url = server,
-             body = payload,
-             encode = "json",
-             ...
-  )
+  if (!is.null(image)) {
+    send_image(server, topic, image, payload, ...)
+  } else {
+    httr::POST(url = server, body = payload, encode = "json", ...)
+  }
+}
+
+send_image <- function(server, topic, image, payload, ...) {
+  if (inherits(image, "ggplot")) {
+    requireNamespace("ggplot2", quietly = TRUE)
+    tmpf <- tempfile(pattern = "gg", fileext = ".png")
+    ggplot2::ggsave(tmpf, image)
+  } else if (is.character(image)) {
+    stopifnot(file.exists(image))
+    tmpf <- image
+  }
+  imagecon <- file(tmpf, "rb")
+  on.exit(close(imagecon))
+  imagebody <- readBin(con = imagecon,
+                       what = 'raw',
+                       n = file.info(tmpf)$size)
+  if (!is.null(payload$tags)) {
+    payload$tags <- toString(payload$tags)
+  }
+  httr::PUT(url = paste(server, topic, sep = "/"),
+            body = imagebody,
+            httr::add_headers(.headers = unlist(payload)), ...)
 }
 
 #' Retrieve History of Notifications

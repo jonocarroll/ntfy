@@ -11,6 +11,7 @@ ntfy_send(
   priority = 3,
   actions = NULL,
   click = NULL,
+  image = NULL,
   attach = NULL,
   filename = NULL,
   delay = NULL,
@@ -33,6 +34,8 @@ provided as a list}
 \item{actions}{Custom user action buttons for notifications. See \url{https://docs.ntfy.sh/publish/#action-buttons}}
 
 \item{click}{Website opened when notification is clicked. See \url{https://docs.ntfy.sh/publish/#click-action}}
+
+\item{image}{Image to include in the body of the notification. Either a \code{ggplot} object or a filename.}
 
 \item{attach}{URL of an attachment, see attach via URL. See \url{https://docs.ntfy.sh/publish/#attach-file-from-url}}
 
