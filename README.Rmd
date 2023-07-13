@@ -177,6 +177,22 @@ The full ntfy.sh API should be supported, including sending a title and [tags](h
 
 ![](man/figures/notification2.png){width=300}
 
+## Images
+
+Images can be sent within notifications by specifying as `image` either the 
+filename or a `ggplot2` object (which will be saved to a temporary file)
+
+```{r}
+library(ggplot2)
+p <- ggplot(mtcars, (aes(mpg, wt))) + 
+  geom_point() + 
+  geom_smooth() + 
+  labs(title = "ggplot images in {ntfy}")
+ntfy_send("ggplot2 images in notifications!", 
+          tags = c("tada", "chart"),
+          image = p)
+```
+
 ## Emoji
 
 Supported tags (emoji) can be sent with the `tags` argument (one or more). These can be searched or shown with `show_emoji()` which will look for a given name in the compatible values, or search for it in the compatible metadata.
