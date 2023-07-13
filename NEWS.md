@@ -1,6 +1,7 @@
 # ntfy 0.0.3
 
 * Added inline images including ggplot2
+* Trim trailing slash from server URL
 
 # ntfy 0.0.2
 

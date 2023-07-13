@@ -69,15 +69,15 @@ ntfy_send <- function(message  = "test",
   payload <- Filter(Negate(is.null), payload)
 
   if (!is.null(image)) {
-    send_image(server, topic, image, payload, ...)
+    send_image(trim_slash(server), topic, image, payload, ...)
   } else {
-    httr::POST(url = server, body = payload, encode = "json", ...)
+    httr::POST(url = trim_slash(server), body = payload, encode = "json", ...)
   }
 }
 
 send_image <- function(server, topic, image, payload, ...) {
   if (inherits(image, "ggplot")) {
-    requireNamespace("ggplot2", quietly = TRUE)
+    requireNamespace("ggplot2", quietly = FALSE)
     tmpf <- tempfile(pattern = "gg", fileext = ".png")
     ggplot2::ggsave(tmpf, image)
   } else if (is.character(image)) {
@@ -95,6 +95,10 @@ send_image <- function(server, topic, image, payload, ...) {
   httr::PUT(url = paste(server, topic, sep = "/"),
             body = imagebody,
             httr::add_headers(.headers = unlist(payload)), ...)
+}
+
+trim_slash <- function(s) {
+  sub("/$", "", s)
 }
 
 #' Retrieve History of Notifications
