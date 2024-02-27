@@ -18,6 +18,39 @@ ntfy_server <- function(var = "NTFY_SERVER") {
   Sys.getenv(var)
 }
 
+#' Create HTTP headers for basic authentication
+#' 
+#' @param var_username environment variable in which the ntfy username is stored
+#' @param var_password environment variable in which the ntfy password is stored
+#' 
+#' @return an object with class `request` that is passed to [httr::POST()]
+#' @export
+#' 
+#' @examples
+#' \dontrun{
+#' Sys.setenv("NTFY_USERNAME" = "example")
+#' Sys.setenv("NTFY_PASSWORD" = "super-secret-password")
+#' 
+#' # This generates the correct heading:
+#' ntfy_authorization()
+#' #> <request>
+#' #> Headers:
+#' #>   * Authorization: Basic ZXhhbXBsZTpzdXBlci1zZWNyZXQtcGFzc3dvcmQ
+#' }
+#' 
+ntfy_authorization <- function(var_username = "NTFY_USERNAME", var_password = "NTFY_PASSWORD") {
+  username = Sys.getenv(var_username)
+  password = Sys.getenv(var_password)
+  
+  if (username == "") {
+    httr::add_headers()
+  } else {
+    httr::add_headers(
+      Authorization = paste0("Basic ", jsonlite::base64_enc(paste0(username, ":", password)))
+    )
+  }
+}
+
 #' Send a Notification
 #'
 #' @param message text to send as notification
@@ -34,6 +67,7 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 #' @param email E-mail address for e-mail notifications??
 #' @param topic subscribed topic to which to send notification
 #' @param server ntfy server
+#' @param auth basic authorization header created with [ntfy::ntfy_authorization()]
 #' @param ... other options passed to [httr::POST()]
 #'
 #' @return a [httr::response()] object (from [httr::POST()])
@@ -51,6 +85,7 @@ ntfy_send <- function(message  = "test",
                       email    = NULL,
                       topic    = ntfy_topic(),
                       server   = ntfy_server(),
+                      auth     = ntfy_authorization(),
                       ...) {
 
   payload <- list(
@@ -69,9 +104,9 @@ ntfy_send <- function(message  = "test",
   payload <- Filter(Negate(is.null), payload)
 
   if (!is.null(image)) {
-    send_image(trim_slash(server), topic, image, payload, ...)
+    send_image(trim_slash(server), topic, image, payload, config = auth, ...)
   } else {
-    httr::POST(url = trim_slash(server), body = payload, encode = "json", ...)
+    httr::POST(url = trim_slash(server), body = payload, encode = "json", config = auth, ...)
   }
 }
 
