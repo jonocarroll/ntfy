@@ -132,10 +132,13 @@ ntfy_history <- function(since    = "all",
   if (httr2::resp_has_body(resp)) {
     # ntfy returns NDJSON (newline delimited), which has to be handled with
     # jsonlite::stream_in(), which requires it to be a connection object
-    res <- resp |> 
+    con <- resp |> 
       httr2::resp_body_raw() |> 
-      rawConnection() |> 
-      jsonlite::stream_in(simplifyDataFrame = TRUE, verbose = FALSE) |> 
+      rawConnection()
+    on.exit(close(con))
+    
+    res <- 
+      jsonlite::stream_in(con, simplifyDataFrame = TRUE, verbose = FALSE) |> 
       as.data.frame()
   } else {
     message("Server did not return any history.")
