@@ -8,6 +8,11 @@ example_plot <- ggplot2::ggplot(
   ) +
   ggplot2::theme_void()
 
+slow_process <- function(x) {
+  Sys.sleep(2) # sleep for 2 seconds
+  x
+}
+
 # topic for testing
 Sys.setenv("NTFY_SERVER" = "https://ntfy.sh")
 Sys.setenv("NTFY_USERNAME" = "")
@@ -24,7 +29,7 @@ test_that("basic message sending works", {
   Sys.setenv(NTFY_TOPIC = "")
   expect_silent(ntfy_send("Basic test message, topic arg", topic = TEST_TOPIC))
   expect_silent(ntfy_send("Basic test message, topic arg", title = "Testing", topic = TEST_TOPIC))
-    
+  
   # with env var topic
   Sys.setenv(NTFY_TOPIC = TEST_TOPIC)
   expect_silent(ntfy_send("Basic test message"))
@@ -64,23 +69,26 @@ test_that("done and friends work", {
   # with topic argument
   Sys.setenv(NTFY_TOPIC = "")
   expect_silent({mtcars |> 
-    head() |> 
-    ntfy_done(topic = TEST_TOPIC)
+      head() |> 
+      ntfy_done(topic = TEST_TOPIC)
   })
   expect_silent({  
-  mtcars |> 
-    head() |> 
-    ntfy_done_with_timing(topic = TEST_TOPIC)
+    mtcars |> 
+      head() |> 
+      slow_process() |> 
+      ntfy_done_with_timing(topic = TEST_TOPIC)
   })
-
+  
   Sys.setenv(NTFY_TOPIC = TEST_TOPIC)
-  expect_silent({mtcars |> 
-    head() |> 
-    ntfy_done()
+  expect_silent({
+    mtcars |> 
+      head() |> 
+      ntfy_done()
   })
   expect_silent({  
-  mtcars |> 
-    head() |> 
-    ntfy_done_with_timing()
+    mtcars |> 
+      head() |> 
+      slow_process() |> 
+      ntfy_done_with_timing()
   })
 })

@@ -8,6 +8,11 @@ example_plot <- ggplot2::ggplot(
   ) +
   ggplot2::theme_void()
 
+slow_process <- function(x) {
+  Sys.sleep(2) # sleep for 2 seconds
+  x
+}
+
 # topic for testing
 Sys.setenv("NTFY_SERVER" = "https://ntfy.andrewheiss.com")
 Sys.setenv("NTFY_USERNAME" = "example")
@@ -33,7 +38,7 @@ test_that("basic message sending works", {
   Sys.setenv(NTFY_TOPIC = "")
   expect_silent(ntfy_send("Basic test message, topic arg", topic = TEST_TOPIC, auth = TRUE))
   expect_silent(ntfy_send("Basic test message, topic arg", title = "Testing", topic = TEST_TOPIC, auth = TRUE))
-    
+  
   # with env var topic
   Sys.setenv(NTFY_TOPIC = TEST_TOPIC)
   expect_silent(ntfy_send("Basic test message", auth = TRUE))
@@ -55,7 +60,7 @@ test_that("basic message sending works", {
   Sys.setenv(NTFY_AUTH = "TRUE")
   expect_silent(ntfy_send("Basic test message"))
   Sys.setenv(NTFY_AUTH = "")
-
+  
 })
 
 test_that("server history works", {
@@ -84,25 +89,29 @@ test_that("server history works", {
 test_that("done and friends work", {
   # with topic argument
   Sys.setenv(NTFY_TOPIC = "")
-  expect_silent({mtcars |> 
-    head() |> 
-    ntfy_done(topic = TEST_TOPIC, auth = TRUE)
+  expect_silent({
+    mtcars |> 
+      head() |> 
+      ntfy_done(topic = TEST_TOPIC, auth = TRUE)
   })
   expect_silent({  
-  mtcars |> 
-    head() |> 
-    ntfy_done_with_timing(topic = TEST_TOPIC, auth = TRUE)
+    mtcars |> 
+      head() |>
+      slow_process() |> 
+      ntfy_done_with_timing(topic = TEST_TOPIC, auth = TRUE)
   })
-
+  
   Sys.setenv(NTFY_TOPIC = TEST_TOPIC)
-  expect_silent({mtcars |> 
-    head() |> 
-    ntfy_done(auth = TRUE)
+  expect_silent({
+    mtcars |> 
+      head() |> 
+      ntfy_done(auth = TRUE)
   })
   expect_silent({  
-  mtcars |> 
-    head() |> 
-    ntfy_done_with_timing(auth = TRUE)
+    mtcars |> 
+      head() |> 
+      slow_process() |> 
+      ntfy_done_with_timing(auth = TRUE)
   })
 })
-  
+
