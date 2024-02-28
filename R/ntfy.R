@@ -67,7 +67,7 @@ ntfy_authorization <- function(var_username = "NTFY_USERNAME", var_password = "N
 #' @param email E-mail address for e-mail notifications??
 #' @param topic subscribed topic to which to send notification
 #' @param server ntfy server
-#' @param auth basic authorization header created with [ntfy::ntfy_authorization()]
+#' @param auth Optional basic authorization header created with [ntfy::ntfy_authorization()]
 #' @param ... other options passed to [httr::POST()]
 #'
 #' @return a [httr::response()] object (from [httr::POST()])
@@ -85,7 +85,7 @@ ntfy_send <- function(message  = "test",
                       email    = NULL,
                       topic    = ntfy_topic(),
                       server   = ntfy_server(),
-                      auth     = ntfy_authorization(),
+                      auth     = NULL,
                       ...) {
 
   payload <- list(

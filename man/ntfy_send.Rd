@@ -18,7 +18,7 @@ ntfy_send(
   email = NULL,
   topic = ntfy_topic(),
   server = ntfy_server(),
-  auth = ntfy_authorization(),
+  auth = NULL,
   ...
 )
 }
@@ -50,7 +50,7 @@ provided as a list}
 
 \item{server}{ntfy server}
 
-\item{auth}{basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
+\item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
 
 \item{...}{other options passed to \code{\link[httr:POST]{httr::POST()}}}
 }

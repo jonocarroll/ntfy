@@ -25,7 +25,7 @@ Create HTTP headers for basic authentication
 Sys.setenv("NTFY_USERNAME" = "example")
 Sys.setenv("NTFY_PASSWORD" = "super-secret-password")
 
-# This generates the correct heading:
+# This generates the correct header:
 ntfy_authorization()
 #> <request>
 #> Headers:
