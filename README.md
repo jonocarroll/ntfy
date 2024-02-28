@@ -159,24 +159,33 @@ sends
 
     Process completed in 8.004s
 
-If you're using a topic on a server that requires authentication, you can 
-specify a username and password with the `NTFY_USERNAME` and `NTFY_PASSWORD` 
-environment variables
+If you're using a topic on a server that requires authentication, you can pass 
+`auth = TRUE`, along with a username and password:
+
+```r
+ntfy_send(
+  "test from R!", 
+  auth = TRUE, 
+  username = "example", 
+  password = "super-secret-password"
+)
+```
+
+Alternatively, you can set these as environment variables and they'll get used 
+by `ntfy_send()` automatically:
 
 ```r
 usethis::edit_r_environ()
 
 [...]
 
+NTFY_AUTH='TRUE'
 NTFY_USERNAME='example'
 NTFY_PASSWORD='super-secret-password'
 ```
 
-You can then include this username and password in the notification request by 
-specifying `auth = ntfy_authorization()`:
-
 ```r
-ntfy_send("test from R!", auth = ntfy_authorization())
+ntfy_send("test from R!")
 ```
 
 The history of the notifications sent can be retrieved as well, with

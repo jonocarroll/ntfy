@@ -18,8 +18,9 @@ ntfy_send(
   email = NULL,
   topic = ntfy_topic(),
   server = ntfy_server(),
-  auth = NULL,
-  ...
+  auth = ntfy_auth(),
+  username = ntfy_username(),
+  password = ntfy_password()
 )
 }
 \arguments{
@@ -50,12 +51,14 @@ provided as a list}
 
 \item{server}{ntfy server}
 
-\item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
+\item{auth}{logical indicating if the topic requires password authorization}
 
-\item{...}{other options passed to \code{\link[httr:POST]{httr::POST()}}}
+\item{username}{username with access to a protected topic.}
+
+\item{password}{password with access to a protected topic.}
 }
 \value{
-a \code{\link[httr:response]{httr::response()}} object (from \code{\link[httr:POST]{httr::POST()}})
+a \code{\link[httr2:response]{httr2::response()}} object
 }
 \description{
 Send a Notification

@@ -6,19 +6,19 @@
 \usage{
 ntfy_done_with_timing(
   x,
-  topic = ntfy_topic(),
   message = paste0("Process completed in ", time_result, "s"),
   title = "ntfy_done_with_timing()",
   tags = "stopwatch",
+  topic = ntfy_topic(),
   server = ntfy_server(),
-  auth = NULL,
+  auth = ntfy_auth(),
+  username = ntfy_username(),
+  password = ntfy_password(),
   ...
 )
 }
 \arguments{
 \item{x}{expression to be evaluated and timed}
-
-\item{topic}{subscribed topic to which to send notification}
 
 \item{message}{text to send as notification}
 
@@ -27,11 +27,17 @@ ntfy_done_with_timing(
 \item{tags}{text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
 provided as a list}
 
+\item{topic}{subscribed topic to which to send notification}
+
 \item{server}{ntfy server}
 
-\item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
+\item{auth}{logical indicating if the topic requires password authorization}
 
-\item{...}{other options passed to \code{\link[httr:POST]{httr::POST()}}}
+\item{username}{username with access to a protected topic.}
+
+\item{password}{password with access to a protected topic.}
+
+\item{...}{other arguments passed to \code{\link[=ntfy_send]{ntfy_send()}}}
 }
 \value{
 the result of evaluating x (for further piping) plus a notification will be sent

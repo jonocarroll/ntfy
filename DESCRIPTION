@@ -1,6 +1,6 @@
 Package: ntfy
 Title: Lightweight Wrapper to the ntfy.sh Service
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: 
     c(person("Jonathan", "Carroll", 
              email = "rpkg@jcarroll.com.au", 
@@ -22,12 +22,14 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
-    httr,
+    httr2,
     jsonlite
 URL: https://github.com/jonocarroll/ntfy
 BugReports: https://github.com/jonocarroll/ntfy/issues
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1)
 LazyData: true
 Suggests: 
-    ggplot2
+    ggplot2,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
