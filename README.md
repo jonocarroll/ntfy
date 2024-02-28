@@ -58,19 +58,6 @@ ntfy_server()
 #> [1] "https://ntfy.sh"
 ```
 
-If you’re using a topic on a server that requires authentication, you
-can specify a username and password with the `NTFY_USERNAME` and
-`NTFY_PASSWORD` environment variables
-
-``` r
-usethis::edit_r_environ()
-
-[...]
-
-NTFY_USERNAME='example'
-NTFY_PASSWORD='super-secret-password'
-```
-
 With the package loaded, you can now send notifications which should
 appear on your device
 
@@ -171,6 +158,26 @@ ntfy_done_with_timing(
 sends
 
     Process completed in 8.004s
+
+If you're using a topic on a server that requires authentication, you can 
+specify a username and password with the `NTFY_USERNAME` and `NTFY_PASSWORD` 
+environment variables
+
+```r
+usethis::edit_r_environ()
+
+[...]
+
+NTFY_USERNAME='example'
+NTFY_PASSWORD='super-secret-password'
+```
+
+You can then include this username and password in the notification request by 
+specifying `auth = ntfy_authorization()`:
+
+```r
+ntfy_send("test from R!", auth = ntfy_authorization())
+```
 
 The history of the notifications sent can be retrieved as well, with
 control over how far back to search
