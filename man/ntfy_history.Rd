@@ -24,8 +24,6 @@ messages)}
 \item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
 
 \item{...}{any other (named) query parameters to add to the request}
-
-\item{all}{return all results?}
 }
 \value{
 a \code{\link[=data.frame]{data.frame()}} with one row per notification, with columns as

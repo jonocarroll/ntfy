@@ -1,3 +1,7 @@
+# ntfy 0.0.4
+
+* Added basic authentication for protected servers (#12, @andrewheiss)
+
 # ntfy 0.0.3
 
 * Added inline images including ggplot2
