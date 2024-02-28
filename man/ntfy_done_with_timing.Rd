@@ -11,6 +11,7 @@ ntfy_done_with_timing(
   title = "ntfy_done_with_timing()",
   tags = "stopwatch",
   server = ntfy_server(),
+  auth = NULL,
   ...
 )
 }
@@ -27,6 +28,8 @@ ntfy_done_with_timing(
 provided as a list}
 
 \item{server}{ntfy server}
+
+\item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
 
 \item{...}{other options passed to \code{\link[httr:POST]{httr::POST()}}}
 }

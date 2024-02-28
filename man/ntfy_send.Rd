@@ -18,6 +18,7 @@ ntfy_send(
   email = NULL,
   topic = ntfy_topic(),
   server = ntfy_server(),
+  auth = NULL,
   ...
 )
 }
@@ -48,6 +49,8 @@ provided as a list}
 \item{topic}{subscribed topic to which to send notification}
 
 \item{server}{ntfy server}
+
+\item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
 
 \item{...}{other options passed to \code{\link[httr:POST]{httr::POST()}}}
 }

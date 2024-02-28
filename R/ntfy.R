@@ -18,6 +18,39 @@ ntfy_server <- function(var = "NTFY_SERVER") {
   Sys.getenv(var)
 }
 
+#' Create HTTP headers for basic authentication
+#' 
+#' @param var_username environment variable in which the ntfy username is stored
+#' @param var_password environment variable in which the ntfy password is stored
+#' 
+#' @return an object with class `request` that is passed to [httr::POST()]
+#' @export
+#' 
+#' @examples
+#' \dontrun{
+#' Sys.setenv("NTFY_USERNAME" = "example")
+#' Sys.setenv("NTFY_PASSWORD" = "super-secret-password")
+#' 
+#' # This generates the correct header:
+#' ntfy_authorization()
+#' #> <request>
+#' #> Headers:
+#' #>   * Authorization: Basic ZXhhbXBsZTpzdXBlci1zZWNyZXQtcGFzc3dvcmQ
+#' }
+#' 
+ntfy_authorization <- function(var_username = "NTFY_USERNAME", var_password = "NTFY_PASSWORD") {
+  username = Sys.getenv(var_username)
+  password = Sys.getenv(var_password)
+  
+  if (username == "") {
+    httr::add_headers()
+  } else {
+    httr::add_headers(
+      Authorization = paste0("Basic ", jsonlite::base64_enc(paste0(username, ":", password)))
+    )
+  }
+}
+
 #' Send a Notification
 #'
 #' @param message text to send as notification
@@ -34,6 +67,7 @@ ntfy_server <- function(var = "NTFY_SERVER") {
 #' @param email E-mail address for e-mail notifications??
 #' @param topic subscribed topic to which to send notification
 #' @param server ntfy server
+#' @param auth Optional basic authorization header created with [ntfy::ntfy_authorization()]
 #' @param ... other options passed to [httr::POST()]
 #'
 #' @return a [httr::response()] object (from [httr::POST()])
@@ -51,6 +85,7 @@ ntfy_send <- function(message  = "test",
                       email    = NULL,
                       topic    = ntfy_topic(),
                       server   = ntfy_server(),
+                      auth     = NULL,
                       ...) {
 
   payload <- list(
@@ -69,9 +104,9 @@ ntfy_send <- function(message  = "test",
   payload <- Filter(Negate(is.null), payload)
 
   if (!is.null(image)) {
-    send_image(trim_slash(server), topic, image, payload, ...)
+    send_image(trim_slash(server), topic, image, payload, config = auth, ...)
   } else {
-    httr::POST(url = trim_slash(server), body = payload, encode = "json", ...)
+    httr::POST(url = trim_slash(server), body = payload, encode = "json", config = auth, ...)
   }
 }
 
@@ -103,7 +138,6 @@ trim_slash <- function(s) {
 
 #' Retrieve History of Notifications
 #'
-#' @param all return all results?
 #' @param since duration (e.g. `"10m"` or `"30s"`), a Unix timestamp (e.g.
 #'   `"1635528757"`), a message ID (e.g. `"nFS3knfcQ1xe"`), or `"all"` (all cached
 #'   messages)
@@ -119,9 +153,10 @@ trim_slash <- function(s) {
 ntfy_history <- function(since = "all",
                          topic = ntfy_topic(),
                          server = ntfy_server(),
+                         auth = NULL,
                          ...) {
   qry <- list(poll = 1, since = since, ...)
-  resp <- httr::GET(url = paste(server, topic, "json", sep = "/"), query = qry)
+  resp <- httr::GET(url = paste(server, topic, "json", sep = "/"), query = qry, config = auth)
   resp <- httr::content(resp, "text")
   resp <- gsub("\\n", "DBL_NEWLINE", resp, fixed = TRUE)
   resp <- strsplit(resp, "\\n")[[1]]
@@ -157,8 +192,9 @@ ntfy_done <- function(x,
                       title = "ntfy_done()",
                       tags = "white_check_mark",
                       server = ntfy_server(),
+                      auth = NULL,
                       ...) {
-  ntfy_send(topic = topic, message = message, server = server, title = title, tags = tags, ...)
+  ntfy_send(topic = topic, message = message, server = server, title = title, tags = tags, config = auth, ...)
   x
 }
 
@@ -176,8 +212,9 @@ ntfy_done_with_timing <- function(x,
                                   title = "ntfy_done_with_timing()",
                                   tags = "stopwatch",
                                   server = ntfy_server(),
+                                  auth = NULL,
                              ...) {
   time_result <- system.time(res <- force(x))[3]
-  ntfy_done(res, topic = topic, message = message, server = server, title = title, tags = tags,  ...)
+  ntfy_done(res, topic = topic, message = message, server = server, title = title, tags = tags, config = auth, ...)
 }
 
