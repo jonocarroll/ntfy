@@ -1,3 +1,8 @@
+# ntfy 0.0.5
+
+* Refactored to use {httr2} with tests, simplified image sending, improved/fixed 
+  NDJSON parsing, and general clean-up (#15, @andrewheiss)
+
 # ntfy 0.0.4
 
 * Added basic authentication for protected servers (#12, @andrewheiss)
