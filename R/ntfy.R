@@ -1,21 +1,15 @@
 #' Add basic authorization headers if `auth = TRUE`
 #' @keywords internal
 req_add_auth_if_needed <- function(req, auth, username, password) {
-  if (is.null(auth) || !auth) {
-    req
-  } else {
-    httr2::req_auth_basic(req, username, password)
-  }
+  if (is.null(auth) || !auth) { return(req) }
+  httr2::req_auth_basic(req, username, password)
 }
 
 #' Add image to the request body if `image` is present
 #' @keywords internal
 req_add_image_if_needed <- function(req, image) {
-  if (is.null(image)) {
-    req
-  } else {
-    httr2::req_body_file(req, get_image_path(image))
-  }
+  if (is.null(image)) { return(req) }
+  httr2::req_body_file(req, get_image_path(image))
 }
 
 #' Determine filename of a given image file or ggplot object
