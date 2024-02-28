@@ -1,76 +1,15 @@
-#' Get the ntfy topic
-#'
-#' @param var environment variable in which the topic is stored
-#'
-#' @return the ntfy topic to which the user should be subscribed
-#' @export
-ntfy_topic <- function(var = "NTFY_TOPIC") {
-  Sys.getenv("NTFY_TOPIC")
-}
-
-#' Get the ntfy server
-#'
-#' @param var environment variable in which the server URL is stored
-#'
-#' @return the ntfy server URL
-#' @export
-ntfy_server <- function(var = "NTFY_SERVER") {
-  Sys.getenv(var)
-}
-
-#' Get the ntfy username
-#'
-#' @param var environment variable in which the username is stored
-#'
-#' @return the username with access to the protected ntfy topic
-#' @export
-ntfy_username <- function(var = "NTFY_USERNAME") {
-  Sys.getenv(var)
-}
-
-#' Get the ntfy password
-#'
-#' @param var environment variable in which the password is stored
-#'
-#' @return the password for the username with access to the protected ntfy topic
-#' @export
-ntfy_password <- function(var = "NTFY_PASSWORD") {
-  Sys.getenv(var)
-}
-
-#' Get the ntfy authorization indicator
-#'
-#' @param var environment variable in which the ntfy authorization indicator is stored
-#'
-#' @return a logical that indicates if password authorization is used
-#' @export
-ntfy_auth <- function(var = "NTFY_AUTH") {
-  if (Sys.getenv(var) == "TRUE") {
-    TRUE
-  } else {
-    FALSE
-  }
-}
-
-
 #' Add basic authorization headers if `auth = TRUE`
 #' @keywords internal
 req_add_auth_if_needed <- function(req, auth, username, password) {
-  if (is.null(auth) || !auth) {
-    req
-  } else {
-    httr2::req_auth_basic(req, username, password)
-  }
+  if (is.null(auth) || !auth) { return(req) }
+  httr2::req_auth_basic(req, username, password)
 }
 
 #' Add image to the request body if `image` is present
 #' @keywords internal
 req_add_image_if_needed <- function(req, image) {
-  if (is.null(image)) {
-    req
-  } else {
-    httr2::req_body_file(req, get_image_path(image))
-  }
+  if (is.null(image)) { return(req) }
+  httr2::req_body_file(req, get_image_path(image))
 }
 
 #' Determine filename of a given image file or ggplot object
@@ -193,10 +132,13 @@ ntfy_history <- function(since    = "all",
   if (httr2::resp_has_body(resp)) {
     # ntfy returns NDJSON (newline delimited), which has to be handled with
     # jsonlite::stream_in(), which requires it to be a connection object
-    res <- resp |> 
+    con <- resp |> 
       httr2::resp_body_raw() |> 
-      rawConnection() |> 
-      jsonlite::stream_in(simplifyDataFrame = TRUE, verbose = FALSE) |> 
+      rawConnection()
+    on.exit(close(con))
+    
+    res <- 
+      jsonlite::stream_in(con, simplifyDataFrame = TRUE, verbose = FALSE) |> 
       as.data.frame()
   } else {
     message("Server did not return any history.")
