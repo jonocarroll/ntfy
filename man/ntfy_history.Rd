@@ -4,7 +4,13 @@
 \alias{ntfy_history}
 \title{Retrieve History of Notifications}
 \usage{
-ntfy_history(since = "all", topic = ntfy_topic(), server = ntfy_server(), ...)
+ntfy_history(
+  since = "all",
+  topic = ntfy_topic(),
+  server = ntfy_server(),
+  auth = NULL,
+  ...
+)
 }
 \arguments{
 \item{since}{duration (e.g. \code{"10m"} or \code{"30s"}), a Unix timestamp (e.g.
@@ -14,6 +20,8 @@ messages)}
 \item{topic}{subscribed topic to which to send notification}
 
 \item{server}{ntfy server}
+
+\item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
 
 \item{...}{any other (named) query parameters to add to the request}
 

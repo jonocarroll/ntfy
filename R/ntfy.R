@@ -138,7 +138,6 @@ trim_slash <- function(s) {
 
 #' Retrieve History of Notifications
 #'
-#' @param all return all results?
 #' @param since duration (e.g. `"10m"` or `"30s"`), a Unix timestamp (e.g.
 #'   `"1635528757"`), a message ID (e.g. `"nFS3knfcQ1xe"`), or `"all"` (all cached
 #'   messages)
@@ -154,9 +153,10 @@ trim_slash <- function(s) {
 ntfy_history <- function(since = "all",
                          topic = ntfy_topic(),
                          server = ntfy_server(),
+                         auth = NULL,
                          ...) {
   qry <- list(poll = 1, since = since, ...)
-  resp <- httr::GET(url = paste(server, topic, "json", sep = "/"), query = qry)
+  resp <- httr::GET(url = paste(server, topic, "json", sep = "/"), query = qry, config = auth)
   resp <- httr::content(resp, "text")
   resp <- gsub("\\n", "DBL_NEWLINE", resp, fixed = TRUE)
   resp <- strsplit(resp, "\\n")[[1]]
@@ -192,8 +192,9 @@ ntfy_done <- function(x,
                       title = "ntfy_done()",
                       tags = "white_check_mark",
                       server = ntfy_server(),
+                      auth = NULL,
                       ...) {
-  ntfy_send(topic = topic, message = message, server = server, title = title, tags = tags, ...)
+  ntfy_send(topic = topic, message = message, server = server, title = title, tags = tags, config = auth, ...)
   x
 }
 
@@ -211,8 +212,9 @@ ntfy_done_with_timing <- function(x,
                                   title = "ntfy_done_with_timing()",
                                   tags = "stopwatch",
                                   server = ntfy_server(),
+                                  auth = NULL,
                              ...) {
   time_result <- system.time(res <- force(x))[3]
-  ntfy_done(res, topic = topic, message = message, server = server, title = title, tags = tags,  ...)
+  ntfy_done(res, topic = topic, message = message, server = server, title = title, tags = tags, config = auth, ...)
 }
 

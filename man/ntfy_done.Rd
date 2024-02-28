@@ -11,6 +11,7 @@ ntfy_done(
   title = "ntfy_done()",
   tags = "white_check_mark",
   server = ntfy_server(),
+  auth = NULL,
   ...
 )
 }
@@ -27,6 +28,8 @@ ntfy_done(
 provided as a list}
 
 \item{server}{ntfy server}
+
+\item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
 
 \item{...}{other options passed to \code{\link[httr:POST]{httr::POST()}}}
 }
