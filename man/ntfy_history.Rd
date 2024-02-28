@@ -8,7 +8,9 @@ ntfy_history(
   since = "all",
   topic = ntfy_topic(),
   server = ntfy_server(),
-  auth = NULL,
+  auth = ntfy_auth(),
+  username = ntfy_username(),
+  password = ntfy_password(),
   ...
 )
 }
@@ -21,7 +23,11 @@ messages)}
 
 \item{server}{ntfy server}
 
-\item{auth}{Optional basic authorization header created with \code{\link[=ntfy_authorization]{ntfy_authorization()}}}
+\item{auth}{logical indicating if the topic requires password authorization}
+
+\item{username}{username with access to a protected topic.}
+
+\item{password}{password with access to a protected topic.}
 
 \item{...}{any other (named) query parameters to add to the request}
 }
