@@ -21,10 +21,12 @@ TEST_TOPIC <- "vNdqEO7AXxLKVUim"
 RANDOM_STRING <- jsonlite::base64url_enc(as.character(Sys.time()))
 
 test_that("auth on public fails", {
+  skip_on_cran()
   expect_error(ntfy_send("this should fail", auth = TRUE), regex = "HTTP 401 Unauthorized")
 })
 
 test_that("basic message sending works", {
+  skip_on_cran()
   # with topic argument
   Sys.setenv(NTFY_TOPIC = "")
   expect_silent(ntfy_send("Basic test message, topic arg", topic = TEST_TOPIC))
@@ -48,6 +50,7 @@ test_that("basic message sending works", {
 })
 
 test_that("server history works", {
+  skip_on_cran()
   # with topic argument
   Sys.setenv(NTFY_TOPIC = "")
   expect_silent(ntfy_history(topic = TEST_TOPIC))
@@ -66,6 +69,7 @@ test_that("server history works", {
 })
 
 test_that("done and friends work", {
+  skip_on_cran()
   # with topic argument
   Sys.setenv(NTFY_TOPIC = "")
   expect_silent({mtcars |> 

@@ -1,3 +1,7 @@
+# ntfy 0.0.6
+
+* CRAN release - minor internal changes
+
 # ntfy 0.0.5
 
 * Refactored to use {httr2} with tests, simplified image sending, improved/fixed 

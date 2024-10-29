@@ -39,7 +39,7 @@
 show_emoji <- function(name = NULL, search = FALSE) {
   if (is.null(name)) stop("`name` must be provided")
 
-  data("emoji")
+  emoji <- ntfy::emoji
   if (!name %in% emoji$aliases) {
     message("Unable to find that name directly.")
     search <- TRUE

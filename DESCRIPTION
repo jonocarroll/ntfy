@@ -1,6 +1,6 @@
 Package: ntfy
 Title: Lightweight Wrapper to the ntfy.sh Service
-Version: 0.0.5
+Version: 0.0.6
 Authors@R: 
     c(person("Jonathan", "Carroll", 
              email = "rpkg@jcarroll.com.au", 
@@ -20,7 +20,7 @@ Description: ntfy (pronounce: notify) is a simple HTTP-based pub-sub notificatio
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Imports: 
     httr2,
     jsonlite
