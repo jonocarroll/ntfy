@@ -1,5 +1,5 @@
 Package: ntfy
-Title: Lightweight Wrapper to the ntfy.sh Service
+Title: Lightweight Wrapper to the 'ntfy.sh' Service
 Version: 0.0.6
 Authors@R: 
     c(person("Jonathan", "Carroll", 
@@ -13,7 +13,7 @@ Authors@R:
              comment = c(ORCID = "0000-0002-3948-3914"))
     )
 Maintainer: Jonathan Carroll <rpkg@jcarroll.com.au>
-Description: The ntfy (pronounce: notify) service is a simple HTTP-based pub-sub
+Description: The 'ntfy' (pronounce: notify) service is a simple HTTP-based pub-sub
     notification service. It allows you to send notifications to your phone or 
     desktop via scripts from any computer, entirely without signup, cost or 
     setup. It's also open source if you want to run your own. 
