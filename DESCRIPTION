@@ -13,10 +13,11 @@ Authors@R:
              comment = c(ORCID = "0000-0002-3948-3914"))
     )
 Maintainer: Jonathan Carroll <rpkg@jcarroll.com.au>
-Description: ntfy (pronounce: notify) is a simple HTTP-based pub-sub notification service. 
-    It allows you to send notifications to your phone or desktop via scripts from 
-    any computer, entirely without signup, cost or setup. It's also open source if 
-    you want to run your own. Visit https://ntfy.sh for more details.
+Description: The ntfy (pronounce: notify) service is a simple HTTP-based pub-sub
+    notification service. It allows you to send notifications to your phone or 
+    desktop via scripts from any computer, entirely without signup, cost or 
+    setup. It's also open source if you want to run your own. 
+    Visit <https://ntfy.sh> for more details.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

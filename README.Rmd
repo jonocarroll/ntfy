@@ -281,8 +281,8 @@ If this package is useful to you, [I also accept donations][jonocarroll_sp] via 
 
 [ntfy]:https://ntfy.sh
 [ntfy_gh]:https://github.com/binwiederhier/ntfy
-[rpushbullet]:https://cran.r-project.org/web/packages/RPushbullet/index.html
-[beepr]:https://cran.r-project.org/web/packages/beepr/index.html
+[rpushbullet]:https://cran.r-project.org/package=RPushbullet
+[beepr]:https://cran.r-project.org/package=beepr
 [ifttt]:https://ifttt.com/docs/connect_api
 [rviews]:https://rviews.rstudio.com/2020/06/18/how-to-have-r-notify-you/
 [nifffty]:https://github.com/hrbrmstr/nifffty
