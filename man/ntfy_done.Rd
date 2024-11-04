@@ -45,3 +45,9 @@ the input x (for further piping) plus a notification will be sent
 \description{
 Notify Completion of a Process
 }
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# report that a process has completed
+Sys.sleep(3) |> ntfy_done("Woke up")
+\dontshow{\}) # examplesIf}
+}

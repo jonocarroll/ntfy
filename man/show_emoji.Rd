@@ -23,3 +23,8 @@ contains the names compatible with ntfy. Alternative names are
 included in the \code{tags} column and these will be searched if the
 name is not found in \code{aliases}.
 }
+\examples{
+show_emoji("dog")
+show_emoji("party")
+
+}

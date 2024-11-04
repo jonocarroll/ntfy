@@ -35,6 +35,11 @@
 #' name is not found in `aliases`.
 #'
 #' @return nothing, just prints the emoji if one or more are found
+#' 
+#' @examples
+#' show_emoji("dog")
+#' show_emoji("party")
+#' 
 #' @export
 show_emoji <- function(name = NULL, search = FALSE) {
   if (is.null(name)) stop("`name` must be provided")

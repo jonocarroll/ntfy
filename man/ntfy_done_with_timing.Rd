@@ -45,3 +45,9 @@ the result of evaluating x (for further piping) plus a notification will be sent
 \description{
 Notify Completion of a Process with Timing
 }
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# report that a process has completed, and how long it took
+Sys.sleep(3) |> ntfy_done_with_timing()
+\dontshow{\}) # examplesIf}
+}
