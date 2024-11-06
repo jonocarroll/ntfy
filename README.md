@@ -4,6 +4,7 @@
 # ntfy <img src="man/figures/logo.png" align="right" height="102" />
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 **ntfy** (pronounce: *notify*) is a simple HTTP-based pub-sub
@@ -22,7 +23,13 @@ but made to work nicely in an R workflow.
 
 ## Installation
 
-You can install the development version of ntfy like so:
+You can install the released version of {ntfy} from CRAN
+
+``` r
+install.packages("ntfy")
+```
+
+You can install the development version of {ntfy} from GitHub:
 
 ``` r
 # install.packages("remotes")
@@ -64,12 +71,11 @@ appear on your device
 ``` r
 library(ntfy)
 ntfy_send("test from R!")
-#> Response [https://ntfy.sh/]
-#>   Date: 2023-07-11 03:57
-#>   Status: 200
-#>   Content-Type: application/json
-#>   Size: 136 B
-#> {"id":"cyyxyTbqnyc7","time":1689047847,"expires":1689091047,"event":"message"...
+#> <httr2_response>
+#> POST https://ntfy.sh/jonocarroll_ntfy_testing
+#> Status: 200 OK
+#> Content-Type: application/json
+#> Body: In memory (152 bytes)
 ```
 
 This can be used in many ways. One would be to notify the completion of
@@ -140,7 +146,6 @@ an entire pipeline with `ntfy_done_with_timing()` will work, though
 
 ``` r
 library(magrittr)
-#> Warning: package 'magrittr' was built under R version 4.2.0
 ntfy_done_with_timing(
   mtcars %>%
     head() %>% 
@@ -159,10 +164,16 @@ sends
 
     Process completed in 8.004s
 
-If you're using a topic on a server that requires authentication, you can pass 
-`auth = TRUE`, along with a username and password:
+This service can also be used as a progress indicator via the
+[{progressr}](https://github.com/futureverse/progressr) package - see
+`help("handler_ntfy", package = "progressr")` or
+<https://progressr.futureverse.org/reference/handler_ntfy.html> for more
+details.
 
-```r
+If you’re using a topic on a server that requires authentication, you
+can pass `auth = TRUE`, along with a username and password:
+
+``` r
 ntfy_send(
   "test from R!", 
   auth = TRUE, 
@@ -171,10 +182,10 @@ ntfy_send(
 )
 ```
 
-Alternatively, you can set these as environment variables and they'll get used 
-by `ntfy_send()` automatically:
+Alternatively, you can set these as environment variables and they’ll
+get used by `ntfy_send()` automatically:
 
-```r
+``` r
 usethis::edit_r_environ()
 
 [...]
@@ -184,12 +195,12 @@ NTFY_USERNAME='example'
 NTFY_PASSWORD='super-secret-password'
 ```
 
-```r
+``` r
 ntfy_send("test from R!")
 ```
 
 The history of the notifications sent can be retrieved as well, with
-control over how far back to search
+control over how far back to search (example output shown)
 
 ``` r
 ntfy_history(since = "1h")
@@ -221,6 +232,11 @@ file)
 
 ``` r
 library(ggplot2)
+#> 
+#> Attaching package: 'ggplot2'
+#> The following object is masked from 'package:base':
+#> 
+#>     is.element
 p <- ggplot(mtcars, (aes(mpg, wt))) + 
   geom_point() + 
   geom_smooth() + 
@@ -230,12 +246,15 @@ ntfy_send("ggplot2 images in notifications!",
           image = p)
 #> Saving 7 x 5 in image
 #> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-#> Response [https://ntfy.sh/jonotest]
-#>   Date: 2023-07-11 03:57
-#>   Status: 200
-#>   Content-Type: application/json
-#>   Size: 319 B
-#> {"id":"ML466fCn29AD","time":1689047875,"expires":1689091075,"event":"message"...
+#> <httr2_response>
+#> 
+#> POST https://ntfy.sh/jonocarroll_ntfy_testing
+#> 
+#> Status: 200 OK
+#> 
+#> Content-Type: application/json
+#> 
+#> Body: In memory (335 bytes)
 ```
 
 ## Emoji
@@ -251,15 +270,14 @@ The compatible data is stored as `emoji`
 data("emoji")
 head(emoji)
 #> # A tibble: 6 × 6
-#>   emoji aliases         tags      category          description     unicode_ve…¹
-#>   <chr> <chr>           <list>    <chr>             <chr>           <chr>       
-#> 1 👎    -1              <chr [2]> People & Body     thumbs down     6.0         
-#> 2 👍    +1              <chr [2]> People & Body     thumbs up       6.0         
-#> 3 💯    100             <chr [2]> Smileys & Emotion hundred points  6.0         
-#> 4 🔢    1234            <chr [1]> Symbols           input numbers   6.0         
-#> 5 🥇    1st_place_medal <chr [1]> Activities        1st place medal 9.0         
-#> 6 🥈    2nd_place_medal <chr [1]> Activities        2nd place medal 9.0         
-#> # … with abbreviated variable name ¹​unicode_version
+#>   emoji aliases         tags      category          description  unicode_version
+#>   <chr> <chr>           <list>    <chr>             <chr>        <chr>          
+#> 1 👎    -1              <chr [2]> People & Body     thumbs down  6.0            
+#> 2 👍    +1              <chr [2]> People & Body     thumbs up    6.0            
+#> 3 💯    100             <chr [2]> Smileys & Emotion hundred poi… 6.0            
+#> 4 🔢    1234            <chr [1]> Symbols           input numbe… 6.0            
+#> 5 🥇    1st_place_medal <chr [1]> Activities        1st place m… 9.0            
+#> 6 🥈    2nd_place_medal <chr [1]> Activities        2nd place m… 9.0
 ```
 
 with the tags stored as `tags` for easy auto-complete
@@ -268,12 +286,11 @@ with the tags stored as `tags` for easy auto-complete
 ntfy_send(message = "sending with tags!", 
           tags = c(tags$cat, tags$dog)
 )
-#> Response [https://ntfy.sh/]
-#>   Date: 2023-07-11 03:57
-#>   Status: 200
-#>   Content-Type: application/json
-#>   Size: 163 B
-#> {"id":"ifkGMIb0l9aU","time":1689047876,"expires":1689091076,"event":"message"...
+#> <httr2_response>
+#> POST https://ntfy.sh/jonocarroll_ntfy_testing
+#> Status: 200 OK
+#> Content-Type: application/json
+#> Body: In memory (179 bytes)
 ```
 
 The compatible emoji can be shown with
@@ -321,10 +338,10 @@ show_emoji("dog", search = TRUE)
 
 ## Similar Services
 
-- [{Rpushbullet}](https://cran.r-project.org/web/packages/RPushbullet/index.html)
-  offers similar functionality, but requires sign-up / an API key
-- [{beepr}](https://cran.r-project.org/web/packages/beepr/index.html)
-  can play a sound when a process completes
+- [{Rpushbullet}](https://cran.r-project.org/package=RPushbullet) offers
+  similar functionality, but requires sign-up / an API key
+- [{beepr}](https://cran.r-project.org/package=beepr) can play a sound
+  when a process completes
 - [IFTTT](https://ifttt.com/docs/connect_api) has an API and can be
   configured to send messages with
   e.g. [nifffty](https://github.com/hrbrmstr/nifffty)

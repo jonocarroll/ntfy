@@ -48,6 +48,16 @@ get_image_path <- function(image) {
 #' @param password password with access to a protected topic.
 #'
 #' @return a [httr2::response()] object
+#' 
+#' @examplesIf interactive()
+#' # send a message to the default topic ('mytopic')
+#' ntfy_send("test from R!")
+#' 
+#' # can use tags (emoji)
+#' ntfy_send(message = "sending with tags!", 
+#'           tags = c(tags$cat, tags$dog)
+#' )
+#' 
 #' @export
 ntfy_send <- function(message  = "test",
                       title    = NULL,
@@ -106,6 +116,10 @@ ntfy_send <- function(message  = "test",
 #'
 #' @seealso \url{https://ntfy.sh/docs/subscribe/api/#json-message-format}
 #'
+#' @examplesIf interactive()
+#' # get the last hour of notifications
+#' ntfy_history(since = "1h")
+#'
 #' @export
 ntfy_history <- function(since    = "all",
                          topic    = ntfy_topic(),
@@ -156,6 +170,11 @@ ntfy_history <- function(since    = "all",
 #' @param ... other arguments passed to [ntfy::ntfy_send()]
 #'
 #' @return the input x (for further piping) plus a notification will be sent
+#' 
+#' @examplesIf interactive()
+#' # report that a process has completed
+#' Sys.sleep(3) |> ntfy_done("Woke up")
+#' 
 #' @export
 ntfy_done <- function(x,
                       message  = paste0("Process completed at ", Sys.time()),
@@ -182,6 +201,10 @@ ntfy_done <- function(x,
 #' @param ... other arguments passed to [ntfy::ntfy_send()]
 #'
 #' @return the result of evaluating x (for further piping) plus a notification will be sent
+#'
+#' @examplesIf interactive()
+#' # report that a process has completed, and how long it took
+#' Sys.sleep(3) |> ntfy_done_with_timing()
 #'
 #' @export
 ntfy_done_with_timing <- function(x,

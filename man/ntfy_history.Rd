@@ -38,6 +38,12 @@ described in the documentation
 \description{
 Retrieve History of Notifications
 }
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# get the last hour of notifications
+ntfy_history(since = "1h")
+\dontshow{\}) # examplesIf}
+}
 \seealso{
 \url{https://ntfy.sh/docs/subscribe/api/#json-message-format}
 }
