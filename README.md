@@ -4,6 +4,7 @@
 # ntfy <img src="man/figures/logo.png" align="right" height="102" />
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 **ntfy** (pronounce: *notify*) is a simple HTTP-based pub-sub
@@ -22,7 +23,13 @@ but made to work nicely in an R workflow.
 
 ## Installation
 
-You can install the development version of ntfy like so:
+You can install the released version of {ntfy} from CRAN
+
+``` r
+install.packages("ntfy")
+```
+
+You can install the development version of {ntfy} from GitHub:
 
 ``` r
 # install.packages("remotes")
@@ -157,6 +164,12 @@ sends
 
     Process completed in 8.004s
 
+This service can also be used as a progress indicator via the
+[{progressr}](https://github.com/futureverse/progressr) package - see
+`help("handler_ntfy", package = "progressr")` or
+<https://progressr.futureverse.org/reference/handler_ntfy.html> for more
+details.
+
 If you’re using a topic on a server that requires authentication, you
 can pass `auth = TRUE`, along with a username and password:
 
@@ -187,7 +200,7 @@ ntfy_send("test from R!")
 ```
 
 The history of the notifications sent can be retrieved as well, with
-control over how far back to search
+control over how far back to search (example output shown)
 
 ``` r
 ntfy_history(since = "1h")

@@ -36,9 +36,15 @@ but made to work nicely in an R workflow.
 
 ## Installation
 
-You can install the development version of ntfy like so:
+You can install the released version of {ntfy} from CRAN
 
-``` r
+```r
+install.packages("ntfy")
+```
+
+You can install the development version of {ntfy} from GitHub:
+
+```r
 # install.packages("remotes")
 remotes::install_github("jonocarroll/ntfy")
 ```
@@ -154,6 +160,12 @@ sends
 Process completed in 8.004s
 ```
 
+This service can also be used as a progress indicator via the 
+[{progressr}][progressr] package - see 
+`help("handler_ntfy", package = "progressr")` or 
+https://progressr.futureverse.org/reference/handler_ntfy.html for more 
+details.
+
 If you're using a topic on a server that requires authentication, you can pass `auth = TRUE`, along with a username and password:
 
 ```r
@@ -182,7 +194,8 @@ NTFY_PASSWORD='super-secret-password'
 ntfy_send("test from R!")
 ```
 
-The history of the notifications sent can be retrieved as well, with control over how far back to search
+The history of the notifications sent can be retrieved as well, with control 
+over how far back to search (example output shown)
 
 ```{r history, eval = FALSE}
 ntfy_history(since = "1h")
@@ -288,4 +301,5 @@ If this package is useful to you, [I also accept donations][jonocarroll_sp] via 
 [nifffty]:https://github.com/hrbrmstr/nifffty
 [privacy]:https://ntfy.sh/docs/faq/#will-you-know-what-topics-exist-can-you-spy-on-me
 [ntfy_dev_sp]:https://github.com/sponsors/binwiederhier
+[progressr]:https://github.com/futureverse/progressr
 [jonocarroll_sp]:https://github.com/sponsors/jonocarroll
