@@ -1,6 +1,6 @@
 Package: ntfy
 Title: Lightweight Wrapper to the 'ntfy.sh' Service
-Version: 0.0.6
+Version: 0.0.6.9000
 Authors@R: 
     c(person("Jonathan", "Carroll", 
              email = "rpkg@jcarroll.com.au", 

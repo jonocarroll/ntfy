@@ -1,3 +1,4 @@
+# ntfy 0.0.7
 
 * `ntfy_send()` returns invisibly.
 
