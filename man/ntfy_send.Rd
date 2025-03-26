@@ -58,7 +58,7 @@ provided as a list}
 \item{password}{password with access to a protected topic.}
 }
 \value{
-a \code{\link[httr2:response]{httr2::response()}} object
+a \code{\link[httr2:response]{httr2::response()}} object, invisibly.
 }
 \description{
 Send a Notification
