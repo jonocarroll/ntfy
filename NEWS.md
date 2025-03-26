@@ -1,6 +1,6 @@
 # ntfy 0.0.7
 
-* `ntfy_send()` returns invisibly.
+* `ntfy_send()` returns invisibly (#22, @hadley)
 
 # ntfy 0.0.6
 
