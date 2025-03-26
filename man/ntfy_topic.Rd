@@ -2,16 +2,29 @@
 % Please edit documentation in R/env.R
 \name{ntfy_topic}
 \alias{ntfy_topic}
-\title{Get the ntfy topic}
+\alias{ntfy_server}
+\alias{ntfy_username}
+\alias{ntfy_password}
+\alias{ntfy_auth}
+\title{Get ntfy topics from environment variables}
 \usage{
-ntfy_topic(var = "NTFY_TOPIC")
-}
-\arguments{
-\item{var}{environment variable in which the topic is stored}
-}
-\value{
-the ntfy topic to which the user should be subscribed
+ntfy_topic()
+
+ntfy_server()
+
+ntfy_username()
+
+ntfy_password()
+
+ntfy_auth()
 }
 \description{
-Get the ntfy topic
+\itemize{
+\item \code{ntfy_topic()} uses the \code{NTFY_TOPIC} env var to set the default topic.
+\item \code{ntfy_server()} uses the \code{NTFY_SERVER} env var to set the default server.
+\item \code{ntfy_auth()} uses the \code{NTFY_AUTH} env var to determine is authentication should be used.
+\item \code{ntfy_username()} uses the \code{NTFY_USERNAME} env var to set the default username.
+\item \code{ntfy_password()} uses the \code{NTFY_PASSWORD} env var to set the default password.
 }
+}
+\keyword{internal}
