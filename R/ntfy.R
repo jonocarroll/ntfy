@@ -47,7 +47,7 @@ get_image_path <- function(image) {
 #' @param username username with access to a protected topic.
 #' @param password password with access to a protected topic.
 #'
-#' @return a [httr2::response()] object
+#' @return a [httr2::response()] object, invisibly.
 #' 
 #' @examplesIf interactive()
 #' # send a message to the default topic ('mytopic')
@@ -99,7 +99,7 @@ ntfy_send <- function(message  = "test",
     req_add_image_if_needed(image) |> 
     httr2::req_perform()
   
-  return(resp)
+  return(invisible(resp))
 }
 
 

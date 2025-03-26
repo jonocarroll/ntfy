@@ -71,11 +71,6 @@ appear on your device
 ``` r
 library(ntfy)
 ntfy_send("test from R!")
-#> <httr2_response>
-#> POST https://ntfy.sh/jonocarroll_ntfy_testing
-#> Status: 200 OK
-#> Content-Type: application/json
-#> Body: In memory (152 bytes)
 ```
 
 This can be used in many ways. One would be to notify the completion of
@@ -232,11 +227,6 @@ file)
 
 ``` r
 library(ggplot2)
-#> 
-#> Attaching package: 'ggplot2'
-#> The following object is masked from 'package:base':
-#> 
-#>     is.element
 p <- ggplot(mtcars, (aes(mpg, wt))) + 
   geom_point() + 
   geom_smooth() + 
@@ -246,15 +236,6 @@ ntfy_send("ggplot2 images in notifications!",
           image = p)
 #> Saving 7 x 5 in image
 #> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-#> <httr2_response>
-#> 
-#> POST https://ntfy.sh/jonocarroll_ntfy_testing
-#> 
-#> Status: 200 OK
-#> 
-#> Content-Type: application/json
-#> 
-#> Body: In memory (335 bytes)
 ```
 
 ## Emoji
@@ -286,11 +267,6 @@ with the tags stored as `tags` for easy auto-complete
 ntfy_send(message = "sending with tags!", 
           tags = c(tags$cat, tags$dog)
 )
-#> <httr2_response>
-#> POST https://ntfy.sh/jonocarroll_ntfy_testing
-#> Status: 200 OK
-#> Content-Type: application/json
-#> Body: In memory (179 bytes)
 ```
 
 The compatible emoji can be shown with

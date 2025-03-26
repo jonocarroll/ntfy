@@ -1,3 +1,6 @@
+
+* `ntfy_send()` returns invisibly.
+
 # ntfy 0.0.6
 
 * CRAN release - minor internal changes
