@@ -141,25 +141,6 @@ which sends the notification
 Process completed in 8.003s
 ```
 
-Note: the {magrittr} pipe `%>%` works differently and does not compose the same way, so this will 
-result in a very short time report. Wrapping an entire pipeline with `ntfy_done_with_timing()` will work, 
-though
-
-```{r magrittr}
-library(magrittr)
-ntfy_done_with_timing(
-  mtcars %>%
-    head() %>% 
-    slow_process()
-)
-```
-
-sends
-
-```
-Process completed in 8.004s
-```
-
 This service can also be used as a progress indicator via the 
 [{progressr}][progressr] package - see 
 `help("handler_ntfy", package = "progressr")` or 

@@ -72,10 +72,10 @@ appear on your device
 library(ntfy)
 ntfy_send("test from R!")
 #> <httr2_response>
-#> POST https://ntfy.sh/jonocarroll_ntfy_testing
+#> POST https://ntfy.sh/mytopic
 #> Status: 200 OK
 #> Content-Type: application/json
-#> Body: In memory (152 bytes)
+#> Body: In memory (135 bytes)
 ```
 
 This can be used in many ways. One would be to notify the completion of
@@ -139,30 +139,6 @@ mtcars |>
 which sends the notification
 
     Process completed in 8.003s
-
-Note: the {magrittr} pipe `%>%` works differently and does not compose
-the same way, so this will result in a very short time report. Wrapping
-an entire pipeline with `ntfy_done_with_timing()` will work, though
-
-``` r
-library(magrittr)
-ntfy_done_with_timing(
-  mtcars %>%
-    head() %>% 
-    slow_process()
-)
-#>                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
-#> Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-#> Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-#> Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-#> Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-#> Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-#> Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
-```
-
-sends
-
-    Process completed in 8.004s
 
 This service can also be used as a progress indicator via the
 [{progressr}](https://github.com/futureverse/progressr) package - see
@@ -232,11 +208,6 @@ file)
 
 ``` r
 library(ggplot2)
-#> 
-#> Attaching package: 'ggplot2'
-#> The following object is masked from 'package:base':
-#> 
-#>     is.element
 p <- ggplot(mtcars, (aes(mpg, wt))) + 
   geom_point() + 
   geom_smooth() + 
@@ -248,13 +219,13 @@ ntfy_send("ggplot2 images in notifications!",
 #> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 #> <httr2_response>
 #> 
-#> POST https://ntfy.sh/jonocarroll_ntfy_testing
+#> POST https://ntfy.sh/mytopic
 #> 
 #> Status: 200 OK
 #> 
 #> Content-Type: application/json
 #> 
-#> Body: In memory (335 bytes)
+#> Body: In memory (318 bytes)
 ```
 
 ## Emoji
@@ -287,10 +258,10 @@ ntfy_send(message = "sending with tags!",
           tags = c(tags$cat, tags$dog)
 )
 #> <httr2_response>
-#> POST https://ntfy.sh/jonocarroll_ntfy_testing
+#> POST https://ntfy.sh/mytopic
 #> Status: 200 OK
 #> Content-Type: application/json
-#> Body: In memory (179 bytes)
+#> Body: In memory (162 bytes)
 ```
 
 The compatible emoji can be shown with
