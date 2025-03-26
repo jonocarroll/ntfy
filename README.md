@@ -73,8 +73,11 @@ library(ntfy)
 ntfy_send("test from R!")
 ```
 
-This can be used in many ways. One would be to notify the completion of
-a process. The `ntfy_done()` function sends a notification with the
+This returns the {httr2} response object invisibly, or errors if it was
+unsuccessful.
+
+{ntfy} can be used in many ways. One would be to notify the completion
+of a process. The `ntfy_done()` function sends a notification with the
 (default) body
 
     Process completed at <Sys.time()>
@@ -100,7 +103,7 @@ mtcars |>
 
 which results in a notification on subscribed devices
 
-    Process completed at 2023-07-04 17:00
+    Process completed at 2025-03-27 08:32:04.644186
 
 When using the base R pipe `|>` the piped commands are composed together
 by the parser, so
@@ -134,30 +137,6 @@ mtcars |>
 which sends the notification
 
     Process completed in 8.003s
-
-Note: the {magrittr} pipe `%>%` works differently and does not compose
-the same way, so this will result in a very short time report. Wrapping
-an entire pipeline with `ntfy_done_with_timing()` will work, though
-
-``` r
-library(magrittr)
-ntfy_done_with_timing(
-  mtcars %>%
-    head() %>% 
-    slow_process()
-)
-#>                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
-#> Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-#> Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-#> Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-#> Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-#> Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-#> Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
-```
-
-sends
-
-    Process completed in 8.004s
 
 This service can also be used as a progress indicator via the
 [{progressr}](https://github.com/futureverse/progressr) package - see
@@ -205,10 +184,10 @@ ntfy_history(since = "1h")
     #> 1 0oDpk4oisfNO 1667988383 message yourSecretTopic
     #> 2 4Fcy9kIL0m6Z 1667988413 message yourSecretTopic
     #> 3 AGXn4q0CirFT 1667990983 message yourSecretTopic
-    #>                                    message
-    #> 1                             test from R!
-    #> 2 Process completed at 2022-11-09 17:31:03
-    #> 3              Process completed in 8.003s
+    #>                                          message
+    #> 1                                   test from R!
+    #> 2 Process completed at 2025-03-27 08:12:15.50997
+    #> 3                    Process completed in 8.003s
 
 ## API
 
