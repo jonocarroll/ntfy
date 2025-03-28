@@ -1,49 +1,47 @@
-#' Get the ntfy topic
+#' Get ntfy topics from environment variables
+#' 
+#' * `ntfy_topic()` uses the `NTFY_TOPIC` env var to set the default topic.
+#' * `ntfy_server()` uses the `NTFY_SERVER` env var to set the default server.
+#' * `ntfy_auth()` uses the `NTFY_AUTH` env var to determine is authentication should be used.
+#' * `ntfy_username()` uses the `NTFY_USERNAME` env var to set the default username.
+#' * `ntfy_password()` uses the `NTFY_PASSWORD` env var to set the default password.
 #'
-#' @param var environment variable in which the topic is stored
-#'
-#' @return the ntfy topic to which the user should be subscribed
+#' @keywords internal
 #' @export
-ntfy_topic <- function(var = "NTFY_TOPIC") {
-  Sys.getenv("NTFY_TOPIC")
+ntfy_topic <- function() {
+  topic <- Sys.getenv("NTFY_TOPIC")
+
+  if (topic == "") {
+    stop(
+      "`topic` not set.\n", 
+      "* Either provide `topic` argument.\n",
+      "* Or set `NTFY_TOPIC` environment variable.\n"
+    )
+  }
+
+  topic
 }
 
-#' Get the ntfy server
-#'
-#' @param var environment variable in which the server URL is stored
-#'
-#' @return the ntfy server URL
+#' @rdname ntfy_topic
 #' @export
-ntfy_server <- function(var = "NTFY_SERVER") {
-  Sys.getenv(var)
+ntfy_server <- function() {
+  Sys.getenv("NTFY_SERVER", "https://ntfy.sh")
 }
 
-#' Get the ntfy username
-#'
-#' @param var environment variable in which the username is stored
-#'
-#' @return the username with access to the protected ntfy topic
+#' @rdname ntfy_topic
 #' @export
-ntfy_username <- function(var = "NTFY_USERNAME") {
-  Sys.getenv(var)
+ntfy_username <- function() {
+  Sys.getenv("NTFY_USERNAME")
 }
 
-#' Get the ntfy password
-#'
-#' @param var environment variable in which the password is stored
-#'
-#' @return the password for the username with access to the protected ntfy topic
+#' @rdname ntfy_topic
 #' @export
-ntfy_password <- function(var = "NTFY_PASSWORD") {
-  Sys.getenv(var)
+ntfy_password <- function() {
+  Sys.getenv("NTFY_PASSWORD")
 }
 
-#' Get the ntfy authorization indicator
-#'
-#' @param var environment variable in which the ntfy authorization indicator is stored
-#'
-#' @return a logical that indicates if password authorization is used
+#' @rdname ntfy_topic
 #' @export
-ntfy_auth <- function(var = "NTFY_AUTH") {
-  toupper(Sys.getenv(var)) == "TRUE"
+ntfy_auth <- function() {
+  toupper(Sys.getenv("NTFY_AUTH")) == "TRUE"
 }
