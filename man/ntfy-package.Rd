@@ -24,6 +24,7 @@ Useful links:
 Other contributors:
 \itemize{
   \item Andrew Heiss \email{andrew@andrewheiss.com} (\href{https://orcid.org/0000-0002-3948-3914}{ORCID}) [contributor]
+  \item Hadley Wickham \email{h.wickham@gmail.com} (\href{https://orcid.org/0000-0003-4757-117X}{ORCID}) [contributor]
 }
 
 }

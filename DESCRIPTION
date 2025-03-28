@@ -1,6 +1,6 @@
 Package: ntfy
 Title: Lightweight Wrapper to the 'ntfy.sh' Service
-Version: 0.0.6.9000
+Version: 0.0.6.9001
 Authors@R: 
     c(person("Jonathan", "Carroll", 
              email = "rpkg@jcarroll.com.au", 
@@ -10,7 +10,12 @@ Authors@R:
              family = "Heiss",
              role = "ctb",
              email = "andrew@andrewheiss.com",
-             comment = c(ORCID = "0000-0002-3948-3914"))
+             comment = c(ORCID = "0000-0002-3948-3914")),
+      person(given = "Hadley",
+             family = "Wickham",
+             role = "ctb",
+             email = "h.wickham@gmail.com",
+             comment = c(ORCID = "0000-0003-4757-117X"))
     )
 Maintainer: Jonathan Carroll <rpkg@jcarroll.com.au>
 Description: The 'ntfy' (pronounce: notify) service is a simple HTTP-based pub-sub

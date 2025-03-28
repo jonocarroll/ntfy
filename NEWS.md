@@ -1,6 +1,7 @@
 # ntfy 0.0.7
 
 * `ntfy_send()` returns invisibly (#22, @hadley)
+* removed messaging on attach when no topic is set (#23, @hadley)
 
 # ntfy 0.0.6
 
