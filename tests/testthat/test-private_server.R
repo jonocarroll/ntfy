@@ -23,15 +23,15 @@ RANDOM_STRING <- jsonlite::base64url_enc(paste0("private", as.character(Sys.time
 test_that("no auth and bad auth fail", {
   skip_on_cran()
   # with topic argument
-  expect_error(ntfy_send("Basic test message", topic = TEST_TOPIC), regex = "HTTP 403 Forbidden")
-  expect_error(ntfy_send("Basic test message", auth = TRUE, username = "q", password = "z", topic = TEST_TOPIC), regex = "HTTP 401 Unauthorized")
-  expect_error(ntfy_history(topic = TEST_TOPIC), regex = "HTTP 403 Forbidden")
+  expect_error(ntfy_send("Basic test message", topic = TEST_TOPIC), class = "httr2_http_403")
+  expect_error(ntfy_send("Basic test message", auth = TRUE, username = "q", password = "z", topic = TEST_TOPIC), class = "httr2_http_401")
+  expect_error(ntfy_history(topic = TEST_TOPIC), class = "httr2_http_403")
 
   # with env var topic
   Sys.setenv(NTFY_TOPIC = TEST_TOPIC)
-  expect_error(ntfy_send("Basic test message"), regex = "HTTP 403 Forbidden")
-  expect_error(ntfy_send("Basic test message", auth = TRUE, username = "q", password = "z"), regex = "HTTP 401 Unauthorized")
-  expect_error(ntfy_history(), regex = "HTTP 403 Forbidden")
+  expect_error(ntfy_send("Basic test message"), class = "httr2_http_403")
+  expect_error(ntfy_send("Basic test message", auth = TRUE, username = "q", password = "z"), class = "httr2_http_401")
+  expect_error(ntfy_history(), class = "httr2_http_403")
 })
 
 test_that("basic message sending works", {
@@ -120,4 +120,3 @@ test_that("done and friends work", {
       ntfy_done_with_timing(auth = TRUE)
   })
 })
-
