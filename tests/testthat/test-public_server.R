@@ -22,7 +22,7 @@ RANDOM_STRING <- jsonlite::base64url_enc(as.character(Sys.time()))
 
 test_that("auth on public fails", {
   skip_on_cran()
-  expect_error(ntfy_send("this should fail", auth = TRUE), regex = "HTTP 401 Unauthorized")
+  expect_error(ntfy_send("this should fail", auth = TRUE), class = "httr2_http_401")
 })
 
 test_that("basic message sending works", {
