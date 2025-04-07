@@ -1,30 +1,12 @@
-#' Add basic authorization headers if `auth = TRUE`
-#' @keywords internal
-req_add_auth_if_needed <- function(req, auth, username, password) {
-  if (is.null(auth) || !auth) { return(req) }
-  httr2::req_auth_basic(req, username, password)
-}
+ntfy_request <- function(server, auth, username, password) {
+  req <- httr2::request(server) |>
+    httr2::req_user_agent("ntfy (https://github.com/jonocarroll/ntfy)")
 
-#' Add image to the request body if `image` is present
-#' @keywords internal
-req_add_image_if_needed <- function(req, image) {
-  if (is.null(image)) { return(req) }
-  httr2::req_body_file(req, get_image_path(image))
-}
-
-#' Determine filename of a given image file or ggplot object
-#' @keywords internal
-get_image_path <- function(image) {
-  if (inherits(image, "ggplot")) {
-    requireNamespace("ggplot2", quietly = FALSE)
-    filename <- tempfile(pattern = "gg", fileext = ".png")
-    ggplot2::ggsave(filename, image)
-  } else if (is.character(image)) {
-    stopifnot(file.exists(image))
-    filename <- image
+  if (isTRUE(auth)) {
+    req <- httr2::req_auth_basic(req, username, password)
   }
-  
-  return(filename)
+
+  req
 }
 
 #' Send a Notification
@@ -89,16 +71,25 @@ ntfy_send <- function(message  = "test",
     email    = email
   )
   payload <- Filter(Negate(is.null), payload)
-  
-  resp <- httr2::request(server) |> 
-    httr2::req_url_path_append(topic) |> 
-    httr2::req_method("POST") |> 
-    httr2::req_user_agent("ntfy (https://github.com/jonocarroll/ntfy)") |> 
-    req_add_auth_if_needed(auth, username, password) |>  
-    httr2::req_headers(!!!payload) |> 
-    req_add_image_if_needed(image) |> 
-    httr2::req_perform()
-  
+
+  req <- ntfy_request(server, auth, username, password) |>
+    httr2::req_url_path_append(topic) |>
+    httr2::req_method("POST") |>
+    httr2::req_headers(!!!payload)
+
+  if (!is.null(image)) {
+    if (inherits(image, "ggplot")) {
+      path <- tempfile(pattern = "gg", fileext = ".png")
+      on.exit(unlink(path), add = TRUE)
+      ggplot2::ggsave(path, image)
+    } else if (is.character(image)) {
+      stopifnot(file.exists(image))
+      filename <- path
+    }
+    req <- httr2::req_body_file(req, path)
+  }
+
+  resp <- httr2::req_perform(req)
   return(invisible(resp))
 }
 
@@ -133,16 +124,13 @@ ntfy_history <- function(since    = "all",
     since = since,
     ...
   )
-  
-  resp <- httr2::request(server) |> 
-    httr2::req_url_path_append(topic) |> 
-    httr2::req_url_path_append("json") |> 
-    httr2::req_url_query(!!!query) |> 
-    httr2::req_method("GET") |> 
-    httr2::req_user_agent("ntfy (https://github.com/jonocarroll/ntfy)") |> 
-    req_add_auth_if_needed(auth, username, password) |>
+
+  resp <- ntfy_request(server, auth, username, password) |>
+    httr2::req_url_path_append(topic, "json") |>
+    httr2::req_url_query(!!!query) |>
+    httr2::req_method("GET") |>
     httr2::req_perform()
-  
+
   if (httr2::resp_has_body(resp)) {
     # ntfy returns NDJSON (newline delimited), which has to be handled with
     # jsonlite::stream_in(), which requires it to be a connection object
