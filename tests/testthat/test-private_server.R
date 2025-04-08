@@ -1,5 +1,5 @@
 # Make a test plot
-example_plot <- ggplot2::ggplot(
+example_ggplot <- ggplot2::ggplot(
   data.frame(x = rbeta(500, sample(1:10, 1), 10)), ggplot2::aes(x = x)
 ) +
   ggplot2::geom_histogram(
@@ -7,6 +7,26 @@ example_plot <- ggplot2::ggplot(
     color = "white", fill = "#DA413E"
   ) +
   ggplot2::theme_void()
+
+rect_grob <- grid::rectGrob(
+  x = 0.5, y = 0.5,
+  width = 0.3, height = 0.3,
+  gp = grid::gpar(fill = "lightblue", col = "navy")
+)
+
+circle_grob <- grid::circleGrob(
+  x = 0.5, y = 0.5, r = 0.15,
+  gp = grid::gpar(fill = "pink", col = "red")
+)
+
+text_grob <- grid::textGrob(
+  "Hello Grid!",
+  x = 0.5, y = 0.8,
+  gp = grid::gpar(fontsize = 16, fontface = "bold")
+)
+
+# Combine all grobs into a single grob object
+example_grob <- grid::gTree(children = grid::gList(rect_grob, circle_grob, text_grob))
 
 slow_process <- function(x) {
   Sys.sleep(2) # sleep for 2 seconds
@@ -49,13 +69,43 @@ test_that("basic message sending works", {
   expect_true({
     httr2::resp_status(
       ntfy_send(
-        "Message with an image",
+        "Message with a ggplot2 image",
         title = "Testing",
         tags = c("partying_face", "+1"),
-        image = example_plot,
+        image = example_ggplot,
         auth = TRUE
       )) == 200
   })
+  expect_true({
+    httr2::resp_status(
+      ntfy_send(
+        "Message with a grob image",
+        title = "Testing grob",
+        tags = c("partying_face", "+1"),
+        image = example_grob,
+        auth = TRUE
+      )) == 200
+  })
+  expect_true({
+    httr2::resp_status(
+      ntfy_send(
+        "Message with a stored image",
+        title = "Testing file",
+        tags = c("partying_face", "+1"),
+        image = file.path(testthat::test_path("testdata"), "test.png"),
+        auth = TRUE
+      )) == 200
+  })
+  plot(1:10, 1:10)
+  # expect_true({
+  #   httr2::resp_status(
+  #     ntfy_send(
+  #       "Message with a recorded image",
+  #       title = "Testing file",
+  #       tags = c("partying_face", "+1"),
+  #       image = recordPlot()
+  #     )) == 200
+  # })
   expect_silent(ntfy_send(RANDOM_STRING, title = "Testing with identifier", tags = "eye", auth = TRUE))
 
   # with env var auth

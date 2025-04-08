@@ -37,7 +37,7 @@ provided as a list}
 
 \item{click}{Website opened when notification is clicked. See \url{https://docs.ntfy.sh/publish/#click-action}}
 
-\item{image}{Image to include in the body of the notification. Either a \code{ggplot} object or a filename.}
+\item{image}{Image to include in the body of the notification. See the Images section for more details.}
 
 \item{attach}{URL of an attachment, see attach via URL. See \url{https://docs.ntfy.sh/publish/#attach-file-from-url}}
 
@@ -63,13 +63,24 @@ a \code{\link[httr2:response]{httr2::response()}} object, invisibly.
 \description{
 Send a Notification
 }
+\section{Images}{
+
+The \code{image} argument can take several values;
+\itemize{
+\item a \code{ggplot2} object; the image will be saved with \code{ggplot2::ggsave()}
+\item a \code{grob} object; the image will be saved with \code{png()}
+\item \code{recordPlot()} to send the active plot, saved with \code{png()}
+\item a filename as a string.
+}
+}
+
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # send a message to the default topic ('mytopic')
 ntfy_send("test from R!")
 
 # can use tags (emoji)
-ntfy_send(message = "sending with tags!", 
+ntfy_send(message = "sending with tags!",
           tags = c(tags$cat, tags$dog)
 )
 \dontshow{\}) # examplesIf}

@@ -18,7 +18,7 @@ ntfy_request <- function(server, auth, username, password) {
 #' @param priority Message priority with 1=min, 3=default and 5=max. See \url{https://docs.ntfy.sh/publish/#message-priority}
 #' @param actions Custom user action buttons for notifications. See \url{https://docs.ntfy.sh/publish/#action-buttons}
 #' @param click Website opened when notification is clicked. See \url{https://docs.ntfy.sh/publish/#click-action}
-#' @param image Image to include in the body of the notification. Either a `ggplot` object or a filename.
+#' @param image Image to include in the body of the notification. See the Images section for more details.
 #' @param attach URL of an attachment, see attach via URL. See \url{https://docs.ntfy.sh/publish/#attach-file-from-url}
 #' @param filename File name of the attachment
 #' @param delay Timestamp or duration for delayed delivery
@@ -29,17 +29,24 @@ ntfy_request <- function(server, auth, username, password) {
 #' @param username username with access to a protected topic.
 #' @param password password with access to a protected topic.
 #'
+#' @section Images:
+#' The `image` argument can take several values;
+#' - a `ggplot2` object; the image will be saved with `ggplot2::ggsave()`
+#' - a `grob` object; the image will be saved with `png()`
+#' - `recordPlot()` to send the active plot, saved with `png()`
+#' - a filename as a string.
+#'
 #' @return a [httr2::response()] object, invisibly.
-#' 
+#'
 #' @examplesIf interactive()
 #' # send a message to the default topic ('mytopic')
 #' ntfy_send("test from R!")
-#' 
+#'
 #' # can use tags (emoji)
-#' ntfy_send(message = "sending with tags!", 
+#' ntfy_send(message = "sending with tags!",
 #'           tags = c(tags$cat, tags$dog)
 #' )
-#' 
+#'
 #' @export
 ntfy_send <- function(message  = "test",
                       title    = NULL,
@@ -82,9 +89,21 @@ ntfy_send <- function(message  = "test",
       path <- tempfile(pattern = "gg", fileext = ".png")
       on.exit(unlink(path), add = TRUE)
       ggplot2::ggsave(path, image)
+    } else if (inherits(image, "grob")) {
+      path <- tempfile(pattern = "ntfy-", fileext = ".png")
+      on.exit(unlink(path), add = TRUE)
+      png(path, width = 800, height = 600)
+      grid::grid.draw(image)
+      dev.off()
+    } else if (inherits(image, "recordedplot")) {
+      path <- tempfile(pattern = "ntfy-", fileext = ".png")
+      on.exit(unlink(path), add = TRUE)
+      png(path, width = 800, height = 600)
+      replayPlot(image)
+      dev.off()
     } else if (is.character(image)) {
       stopifnot(file.exists(image))
-      filename <- path
+      path <- image
     }
     req <- httr2::req_body_file(req, path)
   }
@@ -134,19 +153,19 @@ ntfy_history <- function(since    = "all",
   if (httr2::resp_has_body(resp)) {
     # ntfy returns NDJSON (newline delimited), which has to be handled with
     # jsonlite::stream_in(), which requires it to be a connection object
-    con <- resp |> 
-      httr2::resp_body_raw() |> 
+    con <- resp |>
+      httr2::resp_body_raw() |>
       rawConnection()
     on.exit(close(con))
-    
-    res <- 
-      jsonlite::stream_in(con, simplifyDataFrame = TRUE, verbose = FALSE) |> 
+
+    res <-
+      jsonlite::stream_in(con, simplifyDataFrame = TRUE, verbose = FALSE) |>
       as.data.frame()
   } else {
     message("Server did not return any history.")
     res <- data.frame()
   }
-  
+
   return(res)
 }
 
@@ -158,11 +177,11 @@ ntfy_history <- function(since    = "all",
 #' @param ... other arguments passed to [ntfy::ntfy_send()]
 #'
 #' @return the input x (for further piping) plus a notification will be sent
-#' 
+#'
 #' @examplesIf interactive()
 #' # report that a process has completed
 #' Sys.sleep(3) |> ntfy_done("Woke up")
-#' 
+#'
 #' @export
 ntfy_done <- function(x,
                       message  = paste0("Process completed at ", Sys.time()),
@@ -175,8 +194,8 @@ ntfy_done <- function(x,
                       password = ntfy_password(),
                       ...) {
   ntfy_send(
-    message = message, title = title, tags = tags, 
-    topic = topic, server = server, 
+    message = message, title = title, tags = tags,
+    topic = topic, server = server,
     username = username, password = password, auth = auth,
     ...)
   x
@@ -207,8 +226,8 @@ ntfy_done_with_timing <- function(x,
                                   ...) {
   time_result <- system.time(res <- force(x))[3]
   ntfy_send(
-    message = message, title = title, tags = tags, 
-    topic = topic, server = server, 
+    message = message, title = title, tags = tags,
+    topic = topic, server = server,
     username = username, password = password, auth = auth,
     ...)
   x
