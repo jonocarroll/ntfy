@@ -30,7 +30,7 @@ RoxygenNote: 7.3.2
 Imports: 
     httr2,
     jsonlite
-URL: https://github.com/jonocarroll/ntfy
+URL: https://github.com/jonocarroll/ntfy, https://jonocarroll.github.io/ntfy/
 BugReports: https://github.com/jonocarroll/ntfy/issues
 Depends: 
     R (>= 4.1)
