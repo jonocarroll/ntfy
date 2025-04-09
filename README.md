@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/jonocarroll/ntfy/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jonocarroll/ntfy/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 **ntfy** (pronounce: *notify*) is a simple HTTP-based pub-sub
