@@ -1,18 +1,3 @@
-# Make a test plot
-example_plot <- ggplot2::ggplot(
-  data.frame(x = rbeta(500, sample(1:10, 1), 10)), ggplot2::aes(x = x)
-) +
-  ggplot2::geom_histogram(
-    binwidth = 0.05, boundary = 0,
-    color = "white", fill = "#DA413E"
-  ) +
-  ggplot2::theme_void()
-
-slow_process <- function(x) {
-  Sys.sleep(2) # sleep for 2 seconds
-  x
-}
-
 # topic for testing
 Sys.setenv("NTFY_SERVER" = "https://ntfy.sh")
 Sys.setenv("NTFY_USERNAME" = "")
@@ -43,7 +28,7 @@ test_that("basic message sending works", {
         "Message with an image",
         title = "Testing",
         tags = c("partying_face", "+1"),
-        image = example_plot
+        image = example_plot()
       )) == 200
   })
   expect_silent(ntfy_send(RANDOM_STRING, title = "Testing with identifier", tags = "eye"))
