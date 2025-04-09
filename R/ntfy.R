@@ -151,18 +151,25 @@ ntfy_history <- function(since    = "all",
 }
 
 
-#' Notify Completion of a Process
+#' Notify on Completion of a Process
+#' 
+#' `ntfy_done()` tells you when the code completed, and 
+#' `ntfy_done_with_timing()` tells you how long it took.
 #'
 #' @inheritParams ntfy_send
 #' @param x a result (ignored)
 #' @param ... other arguments passed to [ntfy::ntfy_send()]
 #'
-#' @return the input x (for further piping) plus a notification will be sent
+#' @return 
+#' The input `x`` (for further piping). A notification will be sent as a 
+#' side-effect.
 #' 
 #' @examplesIf interactive()
 #' # report that a process has completed
 #' Sys.sleep(3) |> ntfy_done("Woke up")
-#' 
+#'
+#' # report that a process has completed, and how long it took
+#' Sys.sleep(3) |> ntfy_done_with_timing()
 #' @export
 ntfy_done <- function(x,
                       message  = paste0("Process completed at ", Sys.time()),
@@ -182,19 +189,8 @@ ntfy_done <- function(x,
   x
 }
 
-#' Notify Completion of a Process with Timing
-#'
-#' @inheritParams ntfy_done
-#' @param x expression to be evaluated and timed
-#' @param ... other arguments passed to [ntfy::ntfy_send()]
-#'
-#' @return the result of evaluating x (for further piping) plus a notification will be sent
-#'
-#' @examplesIf interactive()
-#' # report that a process has completed, and how long it took
-#' Sys.sleep(3) |> ntfy_done_with_timing()
-#'
 #' @export
+#' @rdname ntfy_done
 ntfy_done_with_timing <- function(x,
                                   message = paste0("Process completed in ", time_result, "s"),
                                   title = "ntfy_done_with_timing()",
