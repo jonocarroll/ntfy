@@ -6,7 +6,7 @@
 \usage{
 ntfy_done_with_timing(
   x,
-  message = paste0("Process completed in ", time_result, "s"),
+  message = NULL,
   title = "ntfy_done_with_timing()",
   tags = "stopwatch",
   topic = ntfy_topic(),
