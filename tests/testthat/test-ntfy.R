@@ -79,8 +79,8 @@ test_that("can retrieve server history", {
   ntfy_send("message 1", topic = topic)
   ntfy_send("message 2", topic = topic)
   ntfy_send("message 3", topic = topic)
-  
-  Sys.sleep(1) # give it a beat
+
+  Sys.sleep(3) # give it a beat
 
   history <- ntfy_history(topic = topic)
   expect_equal(history$message, c("message 1", "message 2", "message 3"))
