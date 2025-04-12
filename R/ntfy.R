@@ -81,7 +81,7 @@ ntfy_send <- function(message  = "test",
     if (inherits(image, "ggplot")) {
       path <- tempfile(pattern = "gg", fileext = ".png")
       on.exit(unlink(path), add = TRUE)
-      ggplot2::ggsave(path, image)
+      ggplot2::ggsave(path, image, width = 5, height = 5)
     } else if (is.character(image)) {
       stopifnot(file.exists(image))
       filename <- path
@@ -192,7 +192,7 @@ ntfy_done <- function(x,
 #' @export
 #' @rdname ntfy_done
 ntfy_done_with_timing <- function(x,
-                                  message = paste0("Process completed in ", time_result, "s"),
+                                  message = paste0("Process completed in ", format(time_result), "s"),
                                   title = "ntfy_done_with_timing()",
                                   tags = "stopwatch",
                                   topic = ntfy_topic(),
@@ -202,6 +202,7 @@ ntfy_done_with_timing <- function(x,
                                   password = ntfy_password(),
                                   ...) {
   time_result <- system.time(res <- force(x))[3]
+
   ntfy_send(
     message = message, title = title, tags = tags,
     topic = topic, server = server,
