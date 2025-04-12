@@ -192,7 +192,7 @@ ntfy_done <- function(x,
 #' @export
 #' @rdname ntfy_done
 ntfy_done_with_timing <- function(x,
-                                  message = NULL,
+                                  message = paste0("Process completed in ", format(time_result), "s"),
                                   title = "ntfy_done_with_timing()",
                                   tags = "stopwatch",
                                   topic = ntfy_topic(),
@@ -203,7 +203,6 @@ ntfy_done_with_timing <- function(x,
                                   ...) {
   time_result <- system.time(res <- force(x))[3]
 
-  message <- message %||% paste0("Process completed in ", format(time_result), "s")
   ntfy_send(
     message = message, title = title, tags = tags,
     topic = topic, server = server,
