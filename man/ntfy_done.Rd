@@ -54,7 +54,7 @@ provided as a list}
 \item{...}{other arguments passed to \code{\link[=ntfy_send]{ntfy_send()}}}
 }
 \value{
-The input `x`` (for further piping). A notification will be sent as a
+The input \code{x} (for further piping). A notification will be sent as a
 side-effect.
 }
 \description{
