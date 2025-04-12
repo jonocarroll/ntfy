@@ -30,16 +30,16 @@ ntfy_request <- function(server, auth, username, password) {
 #' @param password password with access to a protected topic.
 #'
 #' @return a [httr2::response()] object, invisibly.
-#' 
+#'
 #' @examplesIf interactive()
 #' # send a message to the default topic ('mytopic')
 #' ntfy_send("test from R!")
-#' 
+#'
 #' # can use tags (emoji)
-#' ntfy_send(message = "sending with tags!", 
+#' ntfy_send(message = "sending with tags!",
 #'           tags = c(tags$cat, tags$dog)
 #' )
-#' 
+#'
 #' @export
 ntfy_send <- function(message  = "test",
                       title    = NULL,
@@ -134,35 +134,42 @@ ntfy_history <- function(since    = "all",
   if (httr2::resp_has_body(resp)) {
     # ntfy returns NDJSON (newline delimited), which has to be handled with
     # jsonlite::stream_in(), which requires it to be a connection object
-    con <- resp |> 
-      httr2::resp_body_raw() |> 
+    con <- resp |>
+      httr2::resp_body_raw() |>
       rawConnection()
     on.exit(close(con))
-    
-    res <- 
-      jsonlite::stream_in(con, simplifyDataFrame = TRUE, verbose = FALSE) |> 
+
+    res <-
+      jsonlite::stream_in(con, simplifyDataFrame = TRUE, verbose = FALSE) |>
       as.data.frame()
   } else {
     message("Server did not return any history.")
     res <- data.frame()
   }
-  
+
   return(res)
 }
 
 
-#' Notify Completion of a Process
+#' Notify on Completion of a Process
+#'
+#' `ntfy_done()` tells you when the code completed, and
+#' `ntfy_done_with_timing()` tells you how long it took.
 #'
 #' @inheritParams ntfy_send
 #' @param x a result (ignored)
 #' @param ... other arguments passed to [ntfy::ntfy_send()]
 #'
-#' @return the input x (for further piping) plus a notification will be sent
-#' 
+#' @return
+#' The input `x` (for further piping). A notification will be sent as a
+#' side-effect.
+#'
 #' @examplesIf interactive()
 #' # report that a process has completed
 #' Sys.sleep(3) |> ntfy_done("Woke up")
-#' 
+#'
+#' # report that a process has completed, and how long it took
+#' Sys.sleep(3) |> ntfy_done_with_timing()
 #' @export
 ntfy_done <- function(x,
                       message  = paste0("Process completed at ", Sys.time()),
@@ -175,26 +182,15 @@ ntfy_done <- function(x,
                       password = ntfy_password(),
                       ...) {
   ntfy_send(
-    message = message, title = title, tags = tags, 
-    topic = topic, server = server, 
+    message = message, title = title, tags = tags,
+    topic = topic, server = server,
     username = username, password = password, auth = auth,
     ...)
   x
 }
 
-#' Notify Completion of a Process with Timing
-#'
-#' @inheritParams ntfy_done
-#' @param x expression to be evaluated and timed
-#' @param ... other arguments passed to [ntfy::ntfy_send()]
-#'
-#' @return the result of evaluating x (for further piping) plus a notification will be sent
-#'
-#' @examplesIf interactive()
-#' # report that a process has completed, and how long it took
-#' Sys.sleep(3) |> ntfy_done_with_timing()
-#'
 #' @export
+#' @rdname ntfy_done
 ntfy_done_with_timing <- function(x,
                                   message = paste0("Process completed in ", time_result, "s"),
                                   title = "ntfy_done_with_timing()",
@@ -207,8 +203,8 @@ ntfy_done_with_timing <- function(x,
                                   ...) {
   time_result <- system.time(res <- force(x))[3]
   ntfy_send(
-    message = message, title = title, tags = tags, 
-    topic = topic, server = server, 
+    message = message, title = title, tags = tags,
+    topic = topic, server = server,
     username = username, password = password, auth = auth,
     ...)
   x

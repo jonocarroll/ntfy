@@ -14,6 +14,7 @@ The 'ntfy' (pronounce: notify) service is a simple HTTP-based pub-sub notificati
 Useful links:
 \itemize{
   \item \url{https://github.com/jonocarroll/ntfy}
+  \item \url{https://jonocarroll.github.io/ntfy/}
   \item Report bugs at \url{https://github.com/jonocarroll/ntfy/issues}
 }
 
