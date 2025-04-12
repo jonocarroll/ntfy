@@ -69,7 +69,7 @@ Send a Notification
 ntfy_send("test from R!")
 
 # can use tags (emoji)
-ntfy_send(message = "sending with tags!", 
+ntfy_send(message = "sending with tags!",
           tags = c(tags$cat, tags$dog)
 )
 \dontshow{\}) # examplesIf}
