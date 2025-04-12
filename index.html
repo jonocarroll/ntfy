@@ -53,7 +53,7 @@
 </h1>
 </div>
 <!-- badges: start -->
-<!-- badges: end -->
+
 <p><strong>ntfy</strong> (pronounce: <em>notify</em>) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, entirely without signup, cost or setup. It’s also <a href="https://github.com/binwiederhier/ntfy" class="external-link">open source</a> if you want to run your own. Visit <a href="https://ntfy.sh" class="external-link">ntfy.sh</a> for more details.</p>
 <p>{ntfy} is a lightweight R wrapper for this service. The magic sauce is just <code>POST</code> and <code>GET</code> calls equivalent to</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>curl <span class="sc">-</span>d <span class="st">"Process Complete 😀"</span> ntfy.sh<span class="sc">/</span>yourSecretTopic </span></code></pre></div>
@@ -303,7 +303,12 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/jonocarroll/ntfy/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/jonocarroll/ntfy/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
