@@ -20,7 +20,7 @@ ntfy_done(
 
 ntfy_done_with_timing(
   x,
-  message = NULL,
+  message = paste0("Process completed in ", format(time_result), "s"),
   title = "ntfy_done_with_timing()",
   tags = "stopwatch",
   topic = ntfy_topic(),
