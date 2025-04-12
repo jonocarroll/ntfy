@@ -118,12 +118,12 @@
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="fu">h</span>()</span></code></pre></div>
 <p>becomes</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">h</span>(<span class="fu">g</span>(<span class="fu">f</span>()))</span></code></pre></div>
-<p>We can use this fact to time the running of a process if the last function (above, <code>h()</code>) is <code><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time()</a></code>. The <code><a href="reference/ntfy_done_with_timing.html">ntfy_done_with_timing()</a></code> function does exactly this</p>
+<p>We can use this fact to time the running of a process if the last function (above, <code>h()</code>) is <code><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time()</a></code>. The <code><a href="reference/ntfy_done.html">ntfy_done_with_timing()</a></code> function does exactly this</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">slow_process</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/ntfy_done_with_timing.html">ntfy_done_with_timing</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="reference/ntfy_done.html">ntfy_done_with_timing</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb</span></span>
 <span><span class="co">#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4</span></span>
 <span><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4</span></span>
