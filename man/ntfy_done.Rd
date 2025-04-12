@@ -2,13 +2,27 @@
 % Please edit documentation in R/ntfy.R
 \name{ntfy_done}
 \alias{ntfy_done}
-\title{Notify Completion of a Process}
+\alias{ntfy_done_with_timing}
+\title{Notify on Completion of a Process}
 \usage{
 ntfy_done(
   x,
   message = paste0("Process completed at ", Sys.time()),
   title = "ntfy_done()",
   tags = "white_check_mark",
+  topic = ntfy_topic(),
+  server = ntfy_server(),
+  auth = ntfy_auth(),
+  username = ntfy_username(),
+  password = ntfy_password(),
+  ...
+)
+
+ntfy_done_with_timing(
+  x,
+  message = NULL,
+  title = "ntfy_done_with_timing()",
+  tags = "stopwatch",
   topic = ntfy_topic(),
   server = ntfy_server(),
   auth = ntfy_auth(),
@@ -40,14 +54,19 @@ provided as a list}
 \item{...}{other arguments passed to \code{\link[=ntfy_send]{ntfy_send()}}}
 }
 \value{
-the input x (for further piping) plus a notification will be sent
+The input \code{x} (for further piping). A notification will be sent as a
+side-effect.
 }
 \description{
-Notify Completion of a Process
+\code{ntfy_done()} tells you when the code completed, and
+\code{ntfy_done_with_timing()} tells you how long it took.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # report that a process has completed
 Sys.sleep(3) |> ntfy_done("Woke up")
+
+# report that a process has completed, and how long it took
+Sys.sleep(3) |> ntfy_done_with_timing()
 \dontshow{\}) # examplesIf}
 }
