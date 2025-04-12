@@ -1,6 +1,6 @@
 ## code to prepare `tags` dataset goes here
 
-emoji_file <- "inst/emojis/emojis.js"
+emoji_file <- "data-raw/emojis.js"
 
 cx <- V8::v8()
 cx$source(emoji_file) # now the variable 'data' is defined in V8
