@@ -41,34 +41,35 @@ ntfy_request <- function(server, auth, username, password) {
 #' )
 #'
 #' @export
-ntfy_send <- function(message  = "test",
-                      title    = NULL,
-                      tags     = NULL,
-                      priority = 3,
-                      actions  = NULL,
-                      click    = NULL,
-                      image    = NULL,
-                      attach   = NULL,
-                      filename = NULL,
-                      delay    = NULL,
-                      email    = NULL,
-                      topic    = ntfy_topic(),
-                      server   = ntfy_server(),
-                      auth     = ntfy_auth(),
-                      username = ntfy_username(),
-                      password = ntfy_password()) {
-
+ntfy_send <- function(
+  message = "test",
+  title = NULL,
+  tags = NULL,
+  priority = 3,
+  actions = NULL,
+  click = NULL,
+  image = NULL,
+  attach = NULL,
+  filename = NULL,
+  delay = NULL,
+  email = NULL,
+  topic = ntfy_topic(),
+  server = ntfy_server(),
+  auth = ntfy_auth(),
+  username = ntfy_username(),
+  password = ntfy_password()
+) {
   payload <- list(
-    message  = message,
+    message = message,
     priority = priority,
-    title    = title,
-    tags     = toString(as.list(tags)),
-    actions  = actions,
-    click    = click,
-    attach   = attach,
+    title = title,
+    tags = toString(as.list(tags)),
+    actions = actions,
+    click = click,
+    attach = attach,
     filename = filename,
-    delay    = delay,
-    email    = email
+    delay = delay,
+    email = email
   )
   payload <- Filter(Negate(is.null), payload)
 
@@ -112,13 +113,15 @@ ntfy_send <- function(message  = "test",
 #' ntfy_history(since = "1h")
 #'
 #' @export
-ntfy_history <- function(since    = "all",
-                         topic    = ntfy_topic(),
-                         server   = ntfy_server(),
-                         auth     = ntfy_auth(),
-                         username = ntfy_username(),
-                         password = ntfy_password(),
-                         ...) {
+ntfy_history <- function(
+  since = "all",
+  topic = ntfy_topic(),
+  server = ntfy_server(),
+  auth = ntfy_auth(),
+  username = ntfy_username(),
+  password = ntfy_password(),
+  ...
+) {
   query <- list(
     poll = 1,
     since = since,
@@ -171,42 +174,58 @@ ntfy_history <- function(since    = "all",
 #' # report that a process has completed, and how long it took
 #' Sys.sleep(3) |> ntfy_done_with_timing()
 #' @export
-ntfy_done <- function(x,
-                      message  = paste0("Process completed at ", Sys.time()),
-                      title    = "ntfy_done()",
-                      tags     = "white_check_mark",
-                      topic    = ntfy_topic(),
-                      server   = ntfy_server(),
-                      auth     = ntfy_auth(),
-                      username = ntfy_username(),
-                      password = ntfy_password(),
-                      ...) {
+ntfy_done <- function(
+  x,
+  message = paste0("Process completed at ", Sys.time()),
+  title = "ntfy_done()",
+  tags = "white_check_mark",
+  topic = ntfy_topic(),
+  server = ntfy_server(),
+  auth = ntfy_auth(),
+  username = ntfy_username(),
+  password = ntfy_password(),
+  ...
+) {
   ntfy_send(
-    message = message, title = title, tags = tags,
-    topic = topic, server = server,
-    username = username, password = password, auth = auth,
-    ...)
+    message = message,
+    title = title,
+    tags = tags,
+    topic = topic,
+    server = server,
+    username = username,
+    password = password,
+    auth = auth,
+    ...
+  )
   x
 }
 
 #' @export
 #' @rdname ntfy_done
-ntfy_done_with_timing <- function(x,
-                                  message = paste0("Process completed in ", format(time_result), "s"),
-                                  title = "ntfy_done_with_timing()",
-                                  tags = "stopwatch",
-                                  topic = ntfy_topic(),
-                                  server = ntfy_server(),
-                                  auth = ntfy_auth(),
-                                  username = ntfy_username(),
-                                  password = ntfy_password(),
-                                  ...) {
+ntfy_done_with_timing <- function(
+  x,
+  message = paste0("Process completed in ", format(time_result), "s"),
+  title = "ntfy_done_with_timing()",
+  tags = "stopwatch",
+  topic = ntfy_topic(),
+  server = ntfy_server(),
+  auth = ntfy_auth(),
+  username = ntfy_username(),
+  password = ntfy_password(),
+  ...
+) {
   time_result <- system.time(res <- force(x))[3]
 
   ntfy_send(
-    message = message, title = title, tags = tags,
-    topic = topic, server = server,
-    username = username, password = password, auth = auth,
-    ...)
+    message = message,
+    title = title,
+    tags = tags,
+    topic = topic,
+    server = server,
+    username = username,
+    password = password,
+    auth = auth,
+    ...
+  )
   x
 }

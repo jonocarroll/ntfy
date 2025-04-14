@@ -1,5 +1,5 @@
 #' Get ntfy topics from environment variables
-#' 
+#'
 #' * `ntfy_topic()` uses the `NTFY_TOPIC` env var to set the default topic.
 #' * `ntfy_server()` uses the `NTFY_SERVER` env var to set the default server.
 #' * `ntfy_auth()` uses the `NTFY_AUTH` env var to determine is authentication should be used.
@@ -13,7 +13,7 @@ ntfy_topic <- function() {
 
   if (topic == "") {
     stop(
-      "`topic` not set.\n", 
+      "`topic` not set.\n",
       "* Either provide `topic` argument.\n",
       "* Or set `NTFY_TOPIC` environment variable.\n"
     )

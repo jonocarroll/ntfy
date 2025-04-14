@@ -24,7 +24,13 @@ test_that("no auth and bad auth fail on private server", {
     class = "httr2_http_403"
   )
   expect_error(
-    ntfy_send("Basic test message", auth = TRUE, username = "q", password = "z", topic = TEST_TOPIC),
+    ntfy_send(
+      "Basic test message",
+      auth = TRUE,
+      username = "q",
+      password = "z",
+      topic = TEST_TOPIC
+    ),
     class = "httr2_http_401"
   )
   expect_error(
@@ -106,7 +112,13 @@ test_that("ntfy_done_with_timing works", {
   skip_on_cran()
 
   topic <- random_string()
-  out <- ntfy_done_with_timing({Sys.sleep(0.5); 10}, topic = topic)
+  out <- ntfy_done_with_timing(
+    {
+      Sys.sleep(0.5)
+      10
+    },
+    topic = topic
+  )
   expect_equal(out, 10)
 
   resp <- httr2::last_response()
