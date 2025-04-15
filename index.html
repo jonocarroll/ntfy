@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ntfy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,7 +111,7 @@
 <span><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2</span></span>
 <span><span class="co">#&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</span></span></code></pre></div>
 <p>which results in a notification on subscribed devices</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>Process completed at <span class="dv">2025-03-27</span> <span class="dv">08</span><span class="sc">:</span><span class="dv">32</span><span class="sc">:</span><span class="fl">04.644186</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>Process completed at <span class="dv">2025-04-15</span> <span class="dv">09</span><span class="sc">:</span><span class="dv">38</span><span class="sc">:</span><span class="dv">21</span></span></code></pre></div>
 <p>When using the base R pipe <code>|&gt;</code> the piped commands are composed together by the parser, so</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">f</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">g</span>() <span class="sc">|&gt;</span> </span>
@@ -159,10 +159,10 @@
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#&gt; 1 0oDpk4oisfNO 1667988383 message yourSecretTopic</span></span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co">#&gt; 2 4Fcy9kIL0m6Z 1667988413 message yourSecretTopic</span></span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co">#&gt; 3 AGXn4q0CirFT 1667990983 message yourSecretTopic</span></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt;                                          message</span></span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; 1                                   test from R!</span></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; 2 Process completed at 2025-03-27 08:12:15.50997</span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; 3                    Process completed in 8.003s</span></span></code></pre></div>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt;                                    message</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; 1                             test from R!</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; 2 Process completed at 2025-04-15 09:38:21</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; 3              Process completed in 8.003s</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="api">API<a class="anchor" aria-label="anchor" href="#api"></a>
@@ -184,7 +184,6 @@
 <span><span class="fu"><a href="reference/ntfy_send.html">ntfy_send</a></span><span class="op">(</span><span class="st">"ggplot2 images in notifications!"</span>, </span>
 <span>          tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tada"</span>, <span class="st">"chart"</span><span class="op">)</span>,</span>
 <span>          image <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Saving 7 x 5 in image</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code></pre></div>
 </div>
 <div class="section level2">
