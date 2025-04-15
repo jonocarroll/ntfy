@@ -176,7 +176,7 @@ ntfy_history <- function(
 #' @export
 ntfy_done <- function(
   x,
-  message = paste0("Process completed at ", Sys.time()),
+  message = paste0("Process completed at ", format(Sys.time())),
   title = "ntfy_done()",
   tags = "white_check_mark",
   topic = ntfy_topic(),

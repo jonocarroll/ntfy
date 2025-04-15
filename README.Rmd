@@ -111,7 +111,7 @@ mtcars |>
 which results in a notification on subscribed devices
 
 ```
-Process completed at 2025-03-27 08:32:04.644186
+Process completed at 2025-04-15 09:38:21
 ```
 
 When using the base R pipe `|>` the piped commands are composed together by the 
@@ -190,7 +190,7 @@ ntfy_history(since = "1h")
 structure(list(id = c("0oDpk4oisfNO", "4Fcy9kIL0m6Z", "AGXn4q0CirFT"
 ), time = c(1667988383L, 1667988413L, 1667990983L), event = c("message", 
 "message", "message"), topic = c("yourSecretTopic", "yourSecretTopic", "yourSecretTopic"
-), message = c("test from R!", "Process completed at 2025-03-27 08:12:15.50997", "Process completed in 8.003s")),
+), message = c("test from R!", "Process completed at 2025-04-15 09:38:21", "Process completed in 8.003s")),
 row.names = c(NA, -3L
 ), class = "data.frame")
 ```

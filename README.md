@@ -104,7 +104,7 @@ mtcars |>
 
 which results in a notification on subscribed devices
 
-    Process completed at 2025-03-27 08:32:04.644186
+    Process completed at 2025-04-15 09:38:21
 
 When using the base R pipe `|>` the piped commands are composed together
 by the parser, so
@@ -185,10 +185,10 @@ ntfy_history(since = "1h")
     #> 1 0oDpk4oisfNO 1667988383 message yourSecretTopic
     #> 2 4Fcy9kIL0m6Z 1667988413 message yourSecretTopic
     #> 3 AGXn4q0CirFT 1667990983 message yourSecretTopic
-    #>                                          message
-    #> 1                                   test from R!
-    #> 2 Process completed at 2025-03-27 08:12:15.50997
-    #> 3                    Process completed in 8.003s
+    #>                                    message
+    #> 1                             test from R!
+    #> 2 Process completed at 2025-04-15 09:38:21
+    #> 3              Process completed in 8.003s
 
 ## API
 
@@ -214,7 +214,6 @@ p <- ggplot(mtcars, (aes(mpg, wt))) +
 ntfy_send("ggplot2 images in notifications!", 
           tags = c("tada", "chart"),
           image = p)
-#> Saving 7 x 5 in image
 #> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 ```
 
