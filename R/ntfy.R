@@ -85,7 +85,7 @@ ntfy_send <- function(
       ggplot2::ggsave(path, image, width = 5, height = 5)
     } else if (is.character(image)) {
       stopifnot(file.exists(image))
-      filename <- path
+      path <- image
     }
     req <- httr2::req_body_file(req, path)
   }
