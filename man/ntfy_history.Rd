@@ -39,7 +39,7 @@ described in the documentation
 Retrieve History of Notifications
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # get the last hour of notifications
 ntfy_history(since = "1h")
 \dontshow{\}) # examplesIf}

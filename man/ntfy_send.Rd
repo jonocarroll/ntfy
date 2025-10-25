@@ -64,7 +64,7 @@ a \code{\link[httr2:response]{httr2::response()}} object, invisibly.
 Send a Notification
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # send a message to the default topic ('mytopic')
 ntfy_send("test from R!")
 

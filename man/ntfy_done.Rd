@@ -62,7 +62,7 @@ side-effect.
 \code{ntfy_done_with_timing()} tells you how long it took.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # report that a process has completed
 Sys.sleep(3) |> ntfy_done("Woke up")
 
