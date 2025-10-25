@@ -1,5 +1,6 @@
-# ntfy 0.0.7
+# ntfy 0.1.0
 
+* CRAN release
 * `ntfy_send()` returns invisibly (#22, @hadley)
 * removed messaging on attach when no topic is set (#23, @hadley)
 * more robust request (#24, @hadley) and tests (#25, @hadley)

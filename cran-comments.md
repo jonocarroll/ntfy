@@ -1,12 +1,8 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note*
+0 errors | 0 warnings | 0 notes
 
-* This is a new release.
+Tested locally, rhub linux, m1-san, macos, macos-arm64, windows, plus win-devel and win-release.
 
-Tested locally and on win-devel, win-release.
 
-Flagged 'The Title field should be in title case' but 
-recommends Ntfy.sh over ntfy.sh which is a false-positive.
 
-Added examples and resubmitting.
