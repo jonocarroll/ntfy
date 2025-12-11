@@ -28,6 +28,7 @@ ntfy_request <- function(server, auth, username, password) {
 #' @param auth logical indicating if the topic requires password authorization
 #' @param username username with access to a protected topic.
 #' @param password password with access to a protected topic.
+#' @param markdown use markdown formatting (`TRUE` or `FALSE`).
 #'
 #' @return a [httr2::response()] object, invisibly.
 #'
@@ -57,7 +58,8 @@ ntfy_send <- function(
   server = ntfy_server(),
   auth = ntfy_auth(),
   username = ntfy_username(),
-  password = ntfy_password()
+  password = ntfy_password(),
+  markdown = FALSE
 ) {
   payload <- list(
     message = message,
@@ -69,7 +71,8 @@ ntfy_send <- function(
     attach = attach,
     filename = filename,
     delay = delay,
-    email = email
+    email = email,
+    markdown = ifelse(test = isTRUE(markdown), yes = "yes", no = "no")
   )
   payload <- Filter(Negate(is.null), payload)
 
