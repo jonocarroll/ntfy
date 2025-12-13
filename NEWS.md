@@ -1,10 +1,15 @@
+# ntfy 0.1.1
+
+* Added `markdown` argument to enable markdown formatting (limited support) (#36, @rfsaldanha)
+
+
 # ntfy 0.1.0
 
 * CRAN release
 * `ntfy_send()` returns invisibly (#22, @hadley)
-* removed messaging on attach when no topic is set (#23, @hadley)
-* more robust request (#24, @hadley) and tests (#25, @hadley)
-* renamed default branch to main
+* Removed messaging on attach when no topic is set (#23, @hadley)
+* More robust request (#24, @hadley) and tests (#25, @hadley)
+* Renamed default branch to main
 
 # ntfy 0.0.6
 
