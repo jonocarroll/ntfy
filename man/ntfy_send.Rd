@@ -20,7 +20,8 @@ ntfy_send(
   server = ntfy_server(),
   auth = ntfy_auth(),
   username = ntfy_username(),
-  password = ntfy_password()
+  password = ntfy_password(),
+  markdown = FALSE
 )
 }
 \arguments{
@@ -56,6 +57,8 @@ provided as a list}
 \item{username}{username with access to a protected topic.}
 
 \item{password}{password with access to a protected topic.}
+
+\item{markdown}{use markdown formatting (\code{TRUE} or \code{FALSE}).}
 }
 \value{
 a \code{\link[httr2:response]{httr2::response()}} object, invisibly.
