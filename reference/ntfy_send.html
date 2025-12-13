@@ -50,12 +50,12 @@
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  delay <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  email <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  markdown <span class="op">=</span> <span class="fu"><a href="ntfy_topic.html">ntfy_md</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  topic <span class="op">=</span> <span class="fu"><a href="ntfy_topic.html">ntfy_topic</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  server <span class="op">=</span> <span class="fu"><a href="ntfy_topic.html">ntfy_server</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  auth <span class="op">=</span> <span class="fu"><a href="ntfy_topic.html">ntfy_auth</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  username <span class="op">=</span> <span class="fu"><a href="ntfy_topic.html">ntfy_username</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  password <span class="op">=</span> <span class="fu"><a href="ntfy_topic.html">ntfy_password</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  markdown <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  password <span class="op">=</span> <span class="fu"><a href="ntfy_topic.html">ntfy_password</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -64,15 +64,15 @@
 
 
 <dl><dt id="arg-message">message<a class="anchor" aria-label="anchor" href="#arg-message"></a></dt>
-<dd><p>text to send as notification</p></dd>
+<dd><p>Text to send as notification</p></dd>
 
 
 <dt id="arg-title">title<a class="anchor" aria-label="anchor" href="#arg-title"></a></dt>
-<dd><p>title of notification. See <a href="https://docs.ntfy.sh/publish/#message-title" class="external-link">https://docs.ntfy.sh/publish/#message-title</a></p></dd>
+<dd><p>Title of notification. See <a href="https://docs.ntfy.sh/publish/#message-title" class="external-link">https://docs.ntfy.sh/publish/#message-title</a></p></dd>
 
 
 <dt id="arg-tags">tags<a class="anchor" aria-label="anchor" href="#arg-tags"></a></dt>
-<dd><p>text tags or emoji shortcodes from <a href="https://docs.ntfy.sh/emojis/" class="external-link">https://docs.ntfy.sh/emojis/</a>,
+<dd><p>Text tags or emoji shortcodes from <a href="https://docs.ntfy.sh/emojis/" class="external-link">https://docs.ntfy.sh/emojis/</a>,
 provided as a list</p></dd>
 
 
@@ -105,36 +105,46 @@ provided as a list</p></dd>
 
 
 <dt id="arg-email">email<a class="anchor" aria-label="anchor" href="#arg-email"></a></dt>
-<dd><p>E-mail address for e-mail notifications??</p></dd>
-
-
-<dt id="arg-topic">topic<a class="anchor" aria-label="anchor" href="#arg-topic"></a></dt>
-<dd><p>subscribed topic to which to send notification</p></dd>
-
-
-<dt id="arg-server">server<a class="anchor" aria-label="anchor" href="#arg-server"></a></dt>
-<dd><p>ntfy server</p></dd>
-
-
-<dt id="arg-auth">auth<a class="anchor" aria-label="anchor" href="#arg-auth"></a></dt>
-<dd><p>logical indicating if the topic requires password authorization</p></dd>
-
-
-<dt id="arg-username">username<a class="anchor" aria-label="anchor" href="#arg-username"></a></dt>
-<dd><p>username with access to a protected topic.</p></dd>
-
-
-<dt id="arg-password">password<a class="anchor" aria-label="anchor" href="#arg-password"></a></dt>
-<dd><p>password with access to a protected topic.</p></dd>
+<dd><p>E-mail address for e-mail notifications</p></dd>
 
 
 <dt id="arg-markdown">markdown<a class="anchor" aria-label="anchor" href="#arg-markdown"></a></dt>
-<dd><p>use markdown formatting (<code>TRUE</code> or <code>FALSE</code>).</p></dd>
+<dd><p>(logical) use markdown formatting (<code>TRUE</code> or <code>FALSE</code>). May not be supported on all platforms</p></dd>
+
+
+<dt id="arg-topic">topic<a class="anchor" aria-label="anchor" href="#arg-topic"></a></dt>
+<dd><p>Subscribed topic to which to send notification</p></dd>
+
+
+<dt id="arg-server">server<a class="anchor" aria-label="anchor" href="#arg-server"></a></dt>
+<dd><p>ntfy server (when not using <a href="https://ntfy.sh" class="external-link">https://ntfy.sh</a>)</p></dd>
+
+
+<dt id="arg-auth">auth<a class="anchor" aria-label="anchor" href="#arg-auth"></a></dt>
+<dd><p>(logical) indicating if the topic requires password authorization</p></dd>
+
+
+<dt id="arg-username">username<a class="anchor" aria-label="anchor" href="#arg-username"></a></dt>
+<dd><p>username with access to a protected topic</p></dd>
+
+
+<dt id="arg-password">password<a class="anchor" aria-label="anchor" href="#arg-password"></a></dt>
+<dd><p>password with access to a protected topic</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>a <code><a href="https://httr2.r-lib.org/reference/response.html" class="external-link">httr2::response()</a></code> object, invisibly.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p><code>topic</code>, <code>server</code>, <code>auth</code>, <code>username</code>, <code>password</code>, and <code>markdown</code> can be set
+via environment variables <code>NTFY_TOPIC</code>, <code>NTFY_SERVER</code>, <code>NTFY_AUTH</code>,
+<code>NTFY_USERNAME</code>, <code>NTFY_PASSWORD</code>, and <code>NTFY_MD</code>, respectively.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="ntfy_topic.html">ntfy_topic()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -147,6 +157,9 @@ provided as a list</p></dd>
 <span class="r-in"><span><span class="fu">ntfy_send</span><span class="op">(</span>message <span class="op">=</span> <span class="st">"sending with tags!"</span>,</span></span>
 <span class="r-in"><span>          tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">tags</span><span class="op">$</span><span class="va">cat</span>, <span class="va">tags</span><span class="op">$</span><span class="va">dog</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># if supported, can use markdown</span></span></span>
+<span class="r-in"><span><span class="fu">ntfy_send</span><span class="op">(</span>message <span class="op">=</span> <span class="st">"**Important**: see _details_ [here](https://example.com)"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

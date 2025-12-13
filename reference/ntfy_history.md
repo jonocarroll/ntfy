@@ -26,23 +26,23 @@ ntfy_history(
 
 - topic:
 
-  subscribed topic to which to send notification
+  Subscribed topic to which to send notification
 
 - server:
 
-  ntfy server
+  ntfy server (when not using <https://ntfy.sh>)
 
 - auth:
 
-  logical indicating if the topic requires password authorization
+  (logical) indicating if the topic requires password authorization
 
 - username:
 
-  username with access to a protected topic.
+  username with access to a protected topic
 
 - password:
 
-  password with access to a protected topic.
+  password with access to a protected topic
 
 - ...:
 

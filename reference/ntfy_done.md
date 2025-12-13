@@ -41,37 +41,37 @@ ntfy_done_with_timing(
 
 - message:
 
-  text to send as notification
+  Text to send as notification
 
 - title:
 
-  title of notification. See
+  Title of notification. See
   <https://docs.ntfy.sh/publish/#message-title>
 
 - tags:
 
-  text tags or emoji shortcodes from <https://docs.ntfy.sh/emojis/>,
+  Text tags or emoji shortcodes from <https://docs.ntfy.sh/emojis/>,
   provided as a list
 
 - topic:
 
-  subscribed topic to which to send notification
+  Subscribed topic to which to send notification
 
 - server:
 
-  ntfy server
+  ntfy server (when not using <https://ntfy.sh>)
 
 - auth:
 
-  logical indicating if the topic requires password authorization
+  (logical) indicating if the topic requires password authorization
 
 - username:
 
-  username with access to a protected topic.
+  username with access to a protected topic
 
 - password:
 
-  password with access to a protected topic.
+  password with access to a protected topic
 
 - ...:
 

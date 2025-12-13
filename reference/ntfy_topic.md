@@ -1,4 +1,4 @@
-# Get ntfy topics from environment variables
+# Get ntfy settings from environment variables
 
 - `ntfy_topic()` uses the `NTFY_TOPIC` env var to set the default topic.
 
@@ -14,6 +14,9 @@
 - `ntfy_password()` uses the `NTFY_PASSWORD` env var to set the default
   password.
 
+- `ntfy_md()` uses the `NTFY_MD` env var to set the flag for using
+  markdown.
+
 ## Usage
 
 ``` r
@@ -26,4 +29,6 @@ ntfy_username()
 ntfy_password()
 
 ntfy_auth()
+
+ntfy_md()
 ```
