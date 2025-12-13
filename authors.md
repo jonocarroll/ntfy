@@ -17,12 +17,12 @@ Source:
 [`DESCRIPTION`](https://github.com/jonocarroll/ntfy/blob/main/DESCRIPTION)
 
 Carroll J (2025). *ntfy: Lightweight Wrapper to the 'ntfy.sh' Service*.
-R package version 0.1.0, <https://github.com/jonocarroll/ntfy>.
+R package version 0.1.1, <https://github.com/jonocarroll/ntfy>.
 
     @Manual{,
       title = {ntfy: Lightweight Wrapper to the 'ntfy.sh' Service},
       author = {Jonathan Carroll},
       year = {2025},
-      note = {R package version 0.1.0},
+      note = {R package version 0.1.1},
       url = {https://github.com/jonocarroll/ntfy},
     }

@@ -1,5 +1,11 @@
 # Changelog
 
+## ntfy 0.1.1
+
+- Added `markdown` argument to enable markdown formatting (limited
+  support) ([\#36](https://github.com/jonocarroll/ntfy/issues/36),
+  [@rfsaldanha](https://github.com/rfsaldanha))
+
 ## ntfy 0.1.0
 
 CRAN release: 2025-10-26
@@ -9,15 +15,15 @@ CRAN release: 2025-10-26
   returns invisibly
   ([\#22](https://github.com/jonocarroll/ntfy/issues/22),
   [@hadley](https://github.com/hadley))
-- removed messaging on attach when no topic is set
+- Removed messaging on attach when no topic is set
   ([\#23](https://github.com/jonocarroll/ntfy/issues/23),
   [@hadley](https://github.com/hadley))
-- more robust request
+- More robust request
   ([\#24](https://github.com/jonocarroll/ntfy/issues/24),
   [@hadley](https://github.com/hadley)) and tests
   ([\#25](https://github.com/jonocarroll/ntfy/issues/25),
   [@hadley](https://github.com/hadley))
-- renamed default branch to main
+- Renamed default branch to main
 
 ## ntfy 0.0.6
 
