@@ -5,6 +5,7 @@
 - Added `markdown` argument to enable markdown formatting (limited
   support) ([\#36](https://github.com/jonocarroll/ntfy/issues/36),
   [@rfsaldanha](https://github.com/rfsaldanha))
+- `markdown` can be configured globally via `NTFY_MD` env var
 
 ## ntfy 0.1.0
 
