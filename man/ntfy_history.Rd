@@ -19,15 +19,15 @@ ntfy_history(
 \code{"1635528757"}), a message ID (e.g. \code{"nFS3knfcQ1xe"}), or \code{"all"} (all cached
 messages)}
 
-\item{topic}{subscribed topic to which to send notification}
+\item{topic}{Subscribed topic to which to send notification}
 
-\item{server}{ntfy server}
+\item{server}{ntfy server (when not using \url{https://ntfy.sh})}
 
-\item{auth}{logical indicating if the topic requires password authorization}
+\item{auth}{(logical) indicating if the topic requires password authorization}
 
-\item{username}{username with access to a protected topic.}
+\item{username}{username with access to a protected topic}
 
-\item{password}{password with access to a protected topic.}
+\item{password}{password with access to a protected topic}
 
 \item{...}{any other (named) query parameters to add to the request}
 }

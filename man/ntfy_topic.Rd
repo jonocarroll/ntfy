@@ -6,7 +6,8 @@
 \alias{ntfy_username}
 \alias{ntfy_password}
 \alias{ntfy_auth}
-\title{Get ntfy topics from environment variables}
+\alias{ntfy_md}
+\title{Get ntfy settings from environment variables}
 \usage{
 ntfy_topic()
 
@@ -17,6 +18,8 @@ ntfy_username()
 ntfy_password()
 
 ntfy_auth()
+
+ntfy_md()
 }
 \description{
 \itemize{
@@ -25,6 +28,7 @@ ntfy_auth()
 \item \code{ntfy_auth()} uses the \code{NTFY_AUTH} env var to determine is authentication should be used.
 \item \code{ntfy_username()} uses the \code{NTFY_USERNAME} env var to set the default username.
 \item \code{ntfy_password()} uses the \code{NTFY_PASSWORD} env var to set the default password.
+\item \code{ntfy_md()} uses the \code{NTFY_MD} env var to set the flag for using markdown.
 }
 }
 \keyword{internal}

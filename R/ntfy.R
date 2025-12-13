@@ -11,9 +11,9 @@ ntfy_request <- function(server, auth, username, password) {
 
 #' Send a Notification
 #'
-#' @param message text to send as notification
-#' @param title title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}
-#' @param tags text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
+#' @param message Text to send as notification
+#' @param title Title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}
+#' @param tags Text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
 #'     provided as a list
 #' @param priority Message priority with 1=min, 3=default and 5=max. See \url{https://docs.ntfy.sh/publish/#message-priority}
 #' @param actions Custom user action buttons for notifications. See \url{https://docs.ntfy.sh/publish/#action-buttons}
@@ -22,13 +22,19 @@ ntfy_request <- function(server, auth, username, password) {
 #' @param attach URL of an attachment, see attach via URL. See \url{https://docs.ntfy.sh/publish/#attach-file-from-url}
 #' @param filename File name of the attachment
 #' @param delay Timestamp or duration for delayed delivery
-#' @param email E-mail address for e-mail notifications??
-#' @param topic subscribed topic to which to send notification
-#' @param server ntfy server
-#' @param auth logical indicating if the topic requires password authorization
-#' @param username username with access to a protected topic.
-#' @param password password with access to a protected topic.
-#' @param markdown use markdown formatting (`TRUE` or `FALSE`).
+#' @param email E-mail address for e-mail notifications
+#' @param markdown (logical) use markdown formatting (`TRUE` or `FALSE`). May not be supported on all platforms
+#' @param topic Subscribed topic to which to send notification
+#' @param server ntfy server (when not using \url{https://ntfy.sh})
+#' @param auth (logical) indicating if the topic requires password authorization
+#' @param username username with access to a protected topic
+#' @param password password with access to a protected topic
+#'
+#' @details `topic`, `server`, `auth`, `username`, `password`, and `markdown` can be set
+#'     via environment variables `NTFY_TOPIC`, `NTFY_SERVER`, `NTFY_AUTH`,
+#'     `NTFY_USERNAME`, `NTFY_PASSWORD`, and `NTFY_MD`, respectively.
+#'
+#' @seealso [ntfy_topic()]
 #'
 #' @return a [httr2::response()] object, invisibly.
 #'
@@ -40,6 +46,9 @@ ntfy_request <- function(server, auth, username, password) {
 #' ntfy_send(message = "sending with tags!",
 #'           tags = c(tags$cat, tags$dog)
 #' )
+#'
+#' # if supported, can use markdown
+#' ntfy_send(message = "**Important**: see _details_ [here](https://example.com)")
 #'
 #' @export
 ntfy_send <- function(
@@ -54,12 +63,12 @@ ntfy_send <- function(
   filename = NULL,
   delay = NULL,
   email = NULL,
+  markdown = ntfy_md(),
   topic = ntfy_topic(),
   server = ntfy_server(),
   auth = ntfy_auth(),
   username = ntfy_username(),
-  password = ntfy_password(),
-  markdown = FALSE
+  password = ntfy_password()
 ) {
   payload <- list(
     message = message,

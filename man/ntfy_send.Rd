@@ -16,20 +16,20 @@ ntfy_send(
   filename = NULL,
   delay = NULL,
   email = NULL,
+  markdown = ntfy_md(),
   topic = ntfy_topic(),
   server = ntfy_server(),
   auth = ntfy_auth(),
   username = ntfy_username(),
-  password = ntfy_password(),
-  markdown = FALSE
+  password = ntfy_password()
 )
 }
 \arguments{
-\item{message}{text to send as notification}
+\item{message}{Text to send as notification}
 
-\item{title}{title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}}
+\item{title}{Title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}}
 
-\item{tags}{text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
+\item{tags}{Text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
 provided as a list}
 
 \item{priority}{Message priority with 1=min, 3=default and 5=max. See \url{https://docs.ntfy.sh/publish/#message-priority}}
@@ -46,25 +46,30 @@ provided as a list}
 
 \item{delay}{Timestamp or duration for delayed delivery}
 
-\item{email}{E-mail address for e-mail notifications??}
+\item{email}{E-mail address for e-mail notifications}
 
-\item{topic}{subscribed topic to which to send notification}
+\item{markdown}{(logical) use markdown formatting (\code{TRUE} or \code{FALSE}). May not be supported on all platforms}
 
-\item{server}{ntfy server}
+\item{topic}{Subscribed topic to which to send notification}
 
-\item{auth}{logical indicating if the topic requires password authorization}
+\item{server}{ntfy server (when not using \url{https://ntfy.sh})}
 
-\item{username}{username with access to a protected topic.}
+\item{auth}{(logical) indicating if the topic requires password authorization}
 
-\item{password}{password with access to a protected topic.}
+\item{username}{username with access to a protected topic}
 
-\item{markdown}{use markdown formatting (\code{TRUE} or \code{FALSE}).}
+\item{password}{password with access to a protected topic}
 }
 \value{
 a \code{\link[httr2:response]{httr2::response()}} object, invisibly.
 }
 \description{
 Send a Notification
+}
+\details{
+\code{topic}, \code{server}, \code{auth}, \code{username}, \code{password}, and \code{markdown} can be set
+via environment variables \code{NTFY_TOPIC}, \code{NTFY_SERVER}, \code{NTFY_AUTH},
+\code{NTFY_USERNAME}, \code{NTFY_PASSWORD}, and \code{NTFY_MD}, respectively.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
@@ -75,5 +80,11 @@ ntfy_send("test from R!")
 ntfy_send(message = "sending with tags!",
           tags = c(tags$cat, tags$dog)
 )
+
+# if supported, can use markdown
+ntfy_send(message = "**Important**: see _details_ [here](https://example.com)")
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=ntfy_topic]{ntfy_topic()}}
 }

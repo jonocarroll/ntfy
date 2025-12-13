@@ -34,22 +34,22 @@ ntfy_done_with_timing(
 \arguments{
 \item{x}{a result (ignored)}
 
-\item{message}{text to send as notification}
+\item{message}{Text to send as notification}
 
-\item{title}{title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}}
+\item{title}{Title of notification. See \url{https://docs.ntfy.sh/publish/#message-title}}
 
-\item{tags}{text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
+\item{tags}{Text tags or emoji shortcodes from \url{https://docs.ntfy.sh/emojis/},
 provided as a list}
 
-\item{topic}{subscribed topic to which to send notification}
+\item{topic}{Subscribed topic to which to send notification}
 
-\item{server}{ntfy server}
+\item{server}{ntfy server (when not using \url{https://ntfy.sh})}
 
-\item{auth}{logical indicating if the topic requires password authorization}
+\item{auth}{(logical) indicating if the topic requires password authorization}
 
-\item{username}{username with access to a protected topic.}
+\item{username}{username with access to a protected topic}
 
-\item{password}{password with access to a protected topic.}
+\item{password}{password with access to a protected topic}
 
 \item{...}{other arguments passed to \code{\link[=ntfy_send]{ntfy_send()}}}
 }
